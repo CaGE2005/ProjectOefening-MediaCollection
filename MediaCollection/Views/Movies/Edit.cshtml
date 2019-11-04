@@ -1,7 +1,17 @@
-﻿@model MediaWeb.Database.Movie
+﻿@model MediaCollection.Database.Movie
 
 @{
     ViewData["Title"] = "Edit";
+}
+
+@{
+    string imgSrc = "";
+
+    if (Model.Poster != null)
+    {
+        var base64 = Convert.ToBase64String(Model.Poster);
+        imgSrc = String.Format("data:image/jpg;base64,{0}",base64);
+    }
 }
 
 <h1>Edit</h1>
@@ -10,7 +20,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MovieID" />
             <div class="form-group">
@@ -40,7 +50,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Poster" class="control-label"></label>
-                <input asp-for="Poster" class="form-control" />
+                <img src="@imgSrc" width="80" height="80"/>
+                <input asp-for="Poster" type="file" name="newPoster"/>                
                 <span asp-validation-for="Poster" class="text-danger"></span>
             </div>
             <div class="form-group">

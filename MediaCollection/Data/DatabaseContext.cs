@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using MediaWeb.Database;
+using MediaCollection.Database;
 
 namespace MediaCollection.Data
 {
@@ -13,6 +13,9 @@ namespace MediaCollection.Data
             : base(options)
         {
         }
-        public DbSet<MediaWeb.Database.Movie> Movie { get; set; }
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Serie> Series { get; set; }
+        public DbSet<Album> Albums { get; set; }
+        public DbSet<PodCast> Podcasts { get; set; }
     }
 }

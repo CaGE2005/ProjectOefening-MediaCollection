@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MediaCollection.Data;
-using MediaWeb.Database;
+using MediaCollection.Database;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace MediaCollection.Controllers
 {
@@ -22,7 +24,7 @@ namespace MediaCollection.Controllers
         // GET: Movies
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Movie.ToListAsync());
+            return View(await _context.Movies.ToListAsync());
         }
 
         // GET: Movies/Details/5
@@ -33,7 +35,7 @@ namespace MediaCollection.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie
+            var movie = await _context.Movies
                 .FirstOrDefaultAsync(m => m.MovieID == id);
             if (movie == null)
             {
@@ -54,10 +56,19 @@ namespace MediaCollection.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieID,Title,Genre,Duration,ReleaseDate,Synopsis,Poster,Director,Cast")] Movie movie)
+        public async Task<IActionResult> Create([Bind("MovieID,Title,Genre,Duration,ReleaseDate,Synopsis,Poster,Director,Cast")] Movie movie ,IFormFile newPoster)
         {
             if (ModelState.IsValid)
             {
+                if (newPoster != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await newPoster.CopyToAsync(memoryStream);
+                        movie.Poster = memoryStream.ToArray();
+                    }
+                }
+
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -73,7 +84,7 @@ namespace MediaCollection.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie.FindAsync(id);
+            var movie = await _context.Movies.FindAsync(id);
             if (movie == null)
             {
                 return NotFound();
@@ -86,7 +97,7 @@ namespace MediaCollection.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieID,Title,Genre,Duration,ReleaseDate,Synopsis,Poster,Director,Cast")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("MovieID,Title,Genre,Duration,ReleaseDate,Synopsis,Poster,Director,Cast")] Movie movie, IFormFile newPoster)
         {
             if (id != movie.MovieID)
             {
@@ -95,6 +106,15 @@ namespace MediaCollection.Controllers
 
             if (ModelState.IsValid)
             {
+                if (newPoster != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        newPoster.CopyTo(memoryStream);
+                        movie.Poster = memoryStream.ToArray();
+                    }
+                }
+
                 try
                 {
                     _context.Update(movie);
@@ -124,7 +144,7 @@ namespace MediaCollection.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movie
+            var movie = await _context.Movies
                 .FirstOrDefaultAsync(m => m.MovieID == id);
             if (movie == null)
             {
@@ -139,15 +159,15 @@ namespace MediaCollection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var movie = await _context.Movie.FindAsync(id);
-            _context.Movie.Remove(movie);
+            var movie = await _context.Movies.FindAsync(id);
+            _context.Movies.Remove(movie);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MovieExists(int id)
         {
-            return _context.Movie.Any(e => e.MovieID == id);
+            return _context.Movies.Any(e => e.MovieID == id);
         }
     }
 }
