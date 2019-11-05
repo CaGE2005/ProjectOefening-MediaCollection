@@ -15,9 +15,19 @@ namespace MediaCollection.Database
         public string Cast { get; set; }
         public DateTime ReleaseDate { get; set; }
         public byte[] Poster { get; set; }
-        public int Seasons { get; set; }
+        public ICollection<Episode> Episodes { get; set; }
         public ICollection<SerieRating> Ratings { get; set; }
         public ICollection<SerieReview> Reviews { get; set; }
+    }
+
+    public class Episode
+    {
+        public int EpisodeID { get; set; }
+        public int Season { get; set; }
+        public int EpisodeNo { get; set; }
+        public TimeSpan Duration { get; set; }
+        public string Synopsis { get; set; }
+        public virtual Serie Serie { get; set; }
     }
 
     public class SerieRating

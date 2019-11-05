@@ -29,10 +29,7 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Poster)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Seasons)
-            </th>
+            </th>            
             <th></th>
         </tr>
     </thead>
@@ -56,9 +53,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Poster)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Seasons)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.SerieID">Edit</a> |

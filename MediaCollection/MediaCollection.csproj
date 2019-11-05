@@ -5,6 +5,17 @@
     <UserSecretsId>aspnet-MediaCollection-867CCAEF-3ED1-4C2F-AC58-F4E13B9EF261</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Migrations\20191105104646_init.cs" />
+    <Compile Remove="Migrations\20191105104646_init.Designer.cs" />
+    <Compile Remove="Migrations\20191105120520_seeding.cs" />
+    <Compile Remove="Migrations\20191105120520_seeding.Designer.cs" />
+    <Compile Remove="Migrations\20191105125625_initial-migration.cs" />
+    <Compile Remove="Migrations\20191105125625_initial-migration.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
@@ -19,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>

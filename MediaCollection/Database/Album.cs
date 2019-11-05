@@ -13,11 +13,11 @@ namespace MediaCollection.Database
         public string Genre { get; set; }
         public string AlbumArtist { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public int Duration { get; set; }
+        public TimeSpan Duration { get; set; }
         public byte[] Cover { get; set; }
         public virtual ICollection<Track> Tracks { get; set; }
-        public virtual ICollection<MusicRating> Ratings { get; set; }
-        public virtual ICollection<MusicReview> Reviews { get; set; }
+        public virtual ICollection<AlbumRating> Ratings { get; set; }
+        public virtual ICollection<AlbumReview> Reviews { get; set; }
     }    
 
     public class Track
@@ -26,22 +26,21 @@ namespace MediaCollection.Database
         public int TrackNo { get; set; }
         public string TrackName { get; set; }
         public string Artist { get; set; }
-        public TimeSpan Duration { get; set; }
-        public byte[] Cover { get; set; }
+        public TimeSpan Duration { get; set; }        
         public virtual Album Album { get; set; }
     }
 
-    public class MusicRating
+    public class AlbumRating
     {       
-        public int MusicRatingID { get; set; }
+        public int AlbumRatingID { get; set; }
         public int Rating { get; set; }       
         public string User { get; set; }     
         public virtual Album Album { get; set; }
     }
 
-    public class MusicReview
+    public class AlbumReview
     {       
-        public int MusicReviewID { get; set; }
+        public int AlbumReviewID { get; set; }
         public string Review { get; set; }        
         public string User { get; set; }
         public virtual Album Album { get; set; }

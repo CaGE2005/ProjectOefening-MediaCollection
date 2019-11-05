@@ -4,16 +4,14 @@ using MediaCollection.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace MediaCollection.Data.Migrations
+namespace MediaCollection.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20191104132301_db-changes")]
-    partial class dbchanges
+    partial class DatabaseContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,8 +32,8 @@ namespace MediaCollection.Data.Migrations
                     b.Property<byte[]>("Cover")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int>("Duration")
-                        .HasColumnType("int");
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time");
 
                     b.Property<string>("Genre")
                         .HasColumnType("nvarchar(max)");
@@ -49,6 +47,102 @@ namespace MediaCollection.Data.Migrations
                     b.HasKey("AlbumID");
 
                     b.ToTable("Albums");
+
+                    b.HasData(
+                        new
+                        {
+                            AlbumID = 1,
+                            AlbumArtist = "Pink Floyd",
+                            Duration = new TimeSpan(0, 0, 48, 0, 0),
+                            Genre = "Experimental Rock",
+                            ReleaseDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1973),
+                            Title = "Dark Side of the Moon"
+                        });
+                });
+
+            modelBuilder.Entity("MediaCollection.Database.AlbumRating", b =>
+                {
+                    b.Property<int>("AlbumRatingID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AlbumID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("User")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AlbumRatingID");
+
+                    b.HasIndex("AlbumID");
+
+                    b.ToTable("AlbumRating");
+                });
+
+            modelBuilder.Entity("MediaCollection.Database.AlbumReview", b =>
+                {
+                    b.Property<int>("AlbumReviewID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AlbumID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Review")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("User")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AlbumReviewID");
+
+                    b.HasIndex("AlbumID");
+
+                    b.ToTable("AlbumReview");
+                });
+
+            modelBuilder.Entity("MediaCollection.Database.Episode", b =>
+                {
+                    b.Property<int>("EpisodeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time");
+
+                    b.Property<int>("EpisodeNo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Season")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SerieID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Synopsis")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EpisodeID");
+
+                    b.HasIndex("SerieID");
+
+                    b.ToTable("Episode");
+
+                    b.HasData(
+                        new
+                        {
+                            EpisodeID = 1,
+                            Duration = new TimeSpan(0, 1, 2, 0, 0),
+                            EpisodeNo = 1,
+                            Season = 1,
+                            Synopsis = "Eddard Stark is torn between his family and an old friend when asked to serve at the side of King Robert Baratheon; Viserys plans to wed his sister to a nomadic warlord in exchange for an army."
+                        });
                 });
 
             modelBuilder.Entity("MediaCollection.Database.Movie", b =>
@@ -85,6 +179,19 @@ namespace MediaCollection.Data.Migrations
                     b.HasKey("MovieID");
 
                     b.ToTable("Movies");
+
+                    b.HasData(
+                        new
+                        {
+                            MovieID = 1,
+                            Cast = "Tim Robbins, Morgan Freeman, Bob Gunton",
+                            Director = "Frank Darabont",
+                            Duration = new TimeSpan(0, 2, 22, 0, 0),
+                            Genre = "Drama",
+                            ReleaseDate = new DateTime(1995, 3, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Synopsis = "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
+                            Title = "The Shawshank Redemption"
+                        });
                 });
 
             modelBuilder.Entity("MediaCollection.Database.MovieRating", b =>
@@ -127,53 +234,7 @@ namespace MediaCollection.Data.Migrations
                     b.ToTable("MovieReview");
                 });
 
-            modelBuilder.Entity("MediaCollection.Database.MusicRating", b =>
-                {
-                    b.Property<int>("MusicRatingID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AlbumID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
-
-                    b.Property<string>("User")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MusicRatingID");
-
-                    b.HasIndex("AlbumID");
-
-                    b.ToTable("MusicRating");
-                });
-
-            modelBuilder.Entity("MediaCollection.Database.MusicReview", b =>
-                {
-                    b.Property<int>("MusicReviewID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AlbumID")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Review")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("User")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("MusicReviewID");
-
-                    b.HasIndex("AlbumID");
-
-                    b.ToTable("MusicReview");
-                });
-
-            modelBuilder.Entity("MediaCollection.Database.PodCast", b =>
+            modelBuilder.Entity("MediaCollection.Database.Podcast", b =>
                 {
                     b.Property<int>("PodcastID")
                         .ValueGeneratedOnAdd()
@@ -186,15 +247,20 @@ namespace MediaCollection.Data.Migrations
                     b.Property<string>("Publisher")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PodcastID");
 
                     b.ToTable("Podcasts");
+
+                    b.HasData(
+                        new
+                        {
+                            PodcastID = 1,
+                            Publisher = "Begijn Le Blue",
+                            Title = "Fwiet! Fwiet!"
+                        });
                 });
 
             modelBuilder.Entity("MediaCollection.Database.PodcastEpisode", b =>
@@ -230,6 +296,56 @@ namespace MediaCollection.Data.Migrations
                     b.HasIndex("PodcastID");
 
                     b.ToTable("PodcastEpisode");
+
+                    b.HasData(
+                        new
+                        {
+                            PodcastEpisodeID = 1,
+                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Duration = new TimeSpan(0, 0, 12, 45, 0),
+                            EpisodeNo = 1,
+                            Title = "De Specht"
+                        });
+                });
+
+            modelBuilder.Entity("MediaCollection.Database.PodcastRating", b =>
+                {
+                    b.Property<int>("PodcastRatingID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("PodcastID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.HasKey("PodcastRatingID");
+
+                    b.HasIndex("PodcastID");
+
+                    b.ToTable("PodcastRating");
+                });
+
+            modelBuilder.Entity("MediaCollection.Database.PodcastReview", b =>
+                {
+                    b.Property<int>("PodcastReviewID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("PodcastID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Review")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PodcastReviewID");
+
+                    b.HasIndex("PodcastID");
+
+                    b.ToTable("PodcastReview");
                 });
 
             modelBuilder.Entity("MediaCollection.Database.Serie", b =>
@@ -254,15 +370,23 @@ namespace MediaCollection.Data.Migrations
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Seasons")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SerieID");
 
                     b.ToTable("Series");
+
+                    b.HasData(
+                        new
+                        {
+                            SerieID = 1,
+                            Cast = "Emilia Clarke, Peter Dinklage, Kit Harrington, Maisie Williams",
+                            Director = "D.B. Weiss, David Benioff",
+                            Genre = "Action, Adventure, Drama",
+                            ReleaseDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2011),
+                            Title = "Game of Thrones"
+                        });
                 });
 
             modelBuilder.Entity("MediaCollection.Database.SerieRating", b =>
@@ -324,9 +448,6 @@ namespace MediaCollection.Data.Migrations
                     b.Property<string>("Artist")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Cover")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
@@ -341,6 +462,16 @@ namespace MediaCollection.Data.Migrations
                     b.HasIndex("AlbumID");
 
                     b.ToTable("Track");
+
+                    b.HasData(
+                        new
+                        {
+                            TrackID = 1,
+                            Artist = "Pink Floyd",
+                            Duration = new TimeSpan(0, 0, 1, 30, 0),
+                            TrackName = "Speak to Me",
+                            TrackNo = 1
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -543,6 +674,27 @@ namespace MediaCollection.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("MediaCollection.Database.AlbumRating", b =>
+                {
+                    b.HasOne("MediaCollection.Database.Album", "Album")
+                        .WithMany("Ratings")
+                        .HasForeignKey("AlbumID");
+                });
+
+            modelBuilder.Entity("MediaCollection.Database.AlbumReview", b =>
+                {
+                    b.HasOne("MediaCollection.Database.Album", "Album")
+                        .WithMany("Reviews")
+                        .HasForeignKey("AlbumID");
+                });
+
+            modelBuilder.Entity("MediaCollection.Database.Episode", b =>
+                {
+                    b.HasOne("MediaCollection.Database.Serie", "Serie")
+                        .WithMany("Episodes")
+                        .HasForeignKey("SerieID");
+                });
+
             modelBuilder.Entity("MediaCollection.Database.MovieRating", b =>
                 {
                     b.HasOne("MediaCollection.Database.Movie", "Movie")
@@ -557,24 +709,24 @@ namespace MediaCollection.Data.Migrations
                         .HasForeignKey("MovieID");
                 });
 
-            modelBuilder.Entity("MediaCollection.Database.MusicRating", b =>
-                {
-                    b.HasOne("MediaCollection.Database.Album", "Album")
-                        .WithMany("Ratings")
-                        .HasForeignKey("AlbumID");
-                });
-
-            modelBuilder.Entity("MediaCollection.Database.MusicReview", b =>
-                {
-                    b.HasOne("MediaCollection.Database.Album", "Album")
-                        .WithMany("Reviews")
-                        .HasForeignKey("AlbumID");
-                });
-
             modelBuilder.Entity("MediaCollection.Database.PodcastEpisode", b =>
                 {
-                    b.HasOne("MediaCollection.Database.PodCast", null)
+                    b.HasOne("MediaCollection.Database.Podcast", null)
                         .WithMany("Episodes")
+                        .HasForeignKey("PodcastID");
+                });
+
+            modelBuilder.Entity("MediaCollection.Database.PodcastRating", b =>
+                {
+                    b.HasOne("MediaCollection.Database.Podcast", "Podcast")
+                        .WithMany("Ratings")
+                        .HasForeignKey("PodcastID");
+                });
+
+            modelBuilder.Entity("MediaCollection.Database.PodcastReview", b =>
+                {
+                    b.HasOne("MediaCollection.Database.Podcast", "Podcast")
+                        .WithMany("podcastReviews")
                         .HasForeignKey("PodcastID");
                 });
 
