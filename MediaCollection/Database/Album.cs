@@ -9,12 +9,32 @@ namespace MediaCollection.Database
     public class Album
     {
         public int AlbumID { get; set; }
+
+        [StringLength(50)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [Display(Name = "Title")]
         public string Title { get; set; }
+
+        [StringLength(50)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [Display(Name = "Genre(s)")]
         public string Genre { get; set; }
+
+        [StringLength(50)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [Display(Name = "Artist(s)")]
         public string AlbumArtist { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "0:dd-mm-yyyy", ApplyFormatInEditMode = true)]
         public DateTime ReleaseDate { get; set; }
+
+        [RegularExpression(@"0-9")]
+        [Display(Name = "Duration")]
+        [DisplayFormat(DataFormatString = "0:hh:mm", ApplyFormatInEditMode = true)]
         public TimeSpan Duration { get; set; }
         public byte[] Cover { get; set; }
+
         public virtual ICollection<Track> Tracks { get; set; }
         public virtual ICollection<AlbumRating> Ratings { get; set; }
         public virtual ICollection<AlbumReview> Reviews { get; set; }
@@ -23,26 +43,54 @@ namespace MediaCollection.Database
     public class Track
     {       
         public int TrackID { get; set; }
+
+        [RegularExpression(@"0-9")]
+        [Range(1,100)]
+        [Display(Name = "Track")]
         public int TrackNo { get; set; }
+        [StringLength(50)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [Display(Name = "Title")]
         public string TrackName { get; set; }
+
+        [StringLength(50)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [Display(Name = "Artist(s)")]
         public string Artist { get; set; }
-        public TimeSpan Duration { get; set; }        
+
+        [RegularExpression(@"0-9")]
+        [Display(Name = "Duration")]
+        [DisplayFormat(DataFormatString = "0:hh:mm", ApplyFormatInEditMode = true)]
+        public TimeSpan Duration { get; set; }  
+        
         public virtual Album Album { get; set; }
     }
 
     public class AlbumRating
     {       
         public int AlbumRatingID { get; set; }
-        public int Rating { get; set; }       
+
+        [RegularExpression(@"0-9")]
+        [Range(1, 10)]
+        [Display(Name = "Rating")]
+        public int Rating { get; set; }   
+        
         public string User { get; set; }     
+
         public virtual Album Album { get; set; }
     }
 
     public class AlbumReview
     {       
         public int AlbumReviewID { get; set; }
-        public string Review { get; set; }        
+
+        [StringLength(512)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [Display(Name = "Review")]
+        public string Review { get; set; }  
+        
         public string User { get; set; }
+        
         public virtual Album Album { get; set; }
     }
 }

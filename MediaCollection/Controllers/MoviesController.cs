@@ -9,6 +9,7 @@ using MediaCollection.Data;
 using MediaCollection.Database;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System.Security.Claims;
 
 namespace MediaCollection.Controllers
 {
@@ -33,10 +34,14 @@ namespace MediaCollection.Controllers
             if (id == null)
             {
                 return NotFound();
-            }
+            }            
 
             var movie = await _context.Movies
+                .Include(m => m.Ratings)
+                .Include(m => m.Reviews)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.MovieID == id);
+ 
             if (movie == null)
             {
                 return NotFound();
