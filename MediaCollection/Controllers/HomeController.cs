@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MediaCollection.Models;
+using MediaCollection.Data;
+using MediaCollection.Database;
 
 namespace MediaCollection.Controllers
 {
@@ -17,9 +19,10 @@ namespace MediaCollection.Controllers
         {
             _logger = logger;
         }
-
+        
         public IActionResult Index()
         {
+            //movierating.User = User.Identity.Name;
             return View();
         }
 
@@ -32,6 +35,6 @@ namespace MediaCollection.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        }       
     }
 }

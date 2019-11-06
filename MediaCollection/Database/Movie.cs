@@ -16,33 +16,33 @@ namespace MediaCollection.Database
         public string Title { get; set; }
         
         [StringLength(50)]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
+        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Genre(s)")]
         public string Genre { get; set; }
-
-        [RegularExpression(@"0-9")]
+                
         [Display(Name = "Duration")]
-        [DisplayFormat(DataFormatString = "0:hh:mm", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = @"{0:hh\:mm}", ApplyFormatInEditMode = true)]
+        //[Range(typeof(TimeSpan), "00:00", "23:59")]
         public TimeSpan Duration { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "0:dd-mm-yyyy", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = @"{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime ReleaseDate { get; set; }
 
         [StringLength(256)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Synopsis")]
         public string Synopsis { get; set; }
 
         public byte[] Poster { get; set; }
 
         [StringLength(50)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Director(s)")]
         public string Director { get; set; }
 
         [StringLength(50)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Cast")]
         public string Cast { get; set; }
 
@@ -58,6 +58,8 @@ namespace MediaCollection.Database
         [Range(1,10)]
         [Display(Name = "Rating")]
         public int Rating { get; set; }
+
+        public string User { get; set; }
         public virtual Movie Movie { get; set; }
     }
 
@@ -69,6 +71,9 @@ namespace MediaCollection.Database
         [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
         [Display(Name = "Review")]
         public string Review { get; set; }
+
+        public string User { get; set; }
+
         public virtual Movie Movie { get; set; }
     }    
 }

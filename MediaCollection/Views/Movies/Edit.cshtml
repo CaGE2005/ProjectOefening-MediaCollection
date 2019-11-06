@@ -23,47 +23,58 @@
         <form asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MovieID" />
+
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Genre" class="control-label"></label>
                 <input asp-for="Genre" class="form-control" />
                 <span asp-validation-for="Genre" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Duration" class="control-label"></label>
                 <input asp-for="Duration" class="form-control" />
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="ReleaseDate" class="control-label"></label>
                 <input asp-for="ReleaseDate" class="form-control" />
                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Synopsis" class="control-label"></label>
-                <input asp-for="Synopsis" class="form-control" />
+                <br>
+                <textarea asp-for="Synopsis"></textarea>               
                 <span asp-validation-for="Synopsis" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Poster" class="control-label"></label>
+                <br>
                 <img src="@imgSrc" width="80" height="80"/>
                 <input asp-for="Poster" type="file" name="newPoster"/>                
                 <span asp-validation-for="Poster" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Director" class="control-label"></label>
                 <input asp-for="Director" class="form-control" />
                 <span asp-validation-for="Director" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Cast" class="control-label"></label>
                 <input asp-for="Cast" class="form-control" />
                 <span asp-validation-for="Cast" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
