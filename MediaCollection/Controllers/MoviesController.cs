@@ -168,7 +168,7 @@ namespace MediaCollection.Controllers
             _context.Movies.Remove(movie);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
+        }      
 
         private bool MovieExists(int id)
         {

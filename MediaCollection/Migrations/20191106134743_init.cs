@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MediaCollection.Migrations
 {
-    public partial class initialmigration : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,9 +13,9 @@ namespace MediaCollection.Migrations
                 {
                     AlbumID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    Genre = table.Column<string>(nullable: true),
-                    AlbumArtist = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(maxLength: 100, nullable: true),
+                    Genre = table.Column<string>(maxLength: 100, nullable: true),
+                    AlbumArtist = table.Column<string>(maxLength: 100, nullable: true),
                     ReleaseDate = table.Column<DateTime>(nullable: false),
                     Duration = table.Column<TimeSpan>(nullable: false),
                     Cover = table.Column<byte[]>(nullable: true)
@@ -70,14 +70,14 @@ namespace MediaCollection.Migrations
                 {
                     MovieID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    Genre = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(maxLength: 100, nullable: true),
+                    Genre = table.Column<string>(maxLength: 100, nullable: true),
                     Duration = table.Column<TimeSpan>(nullable: false),
                     ReleaseDate = table.Column<DateTime>(nullable: false),
-                    Synopsis = table.Column<string>(nullable: true),
+                    Synopsis = table.Column<string>(maxLength: 512, nullable: true),
                     Poster = table.Column<byte[]>(nullable: true),
-                    Director = table.Column<string>(nullable: true),
-                    Cast = table.Column<string>(nullable: true)
+                    Director = table.Column<string>(maxLength: 100, nullable: true),
+                    Cast = table.Column<string>(maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,8 +90,8 @@ namespace MediaCollection.Migrations
                 {
                     PodcastID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Publisher = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
+                    Publisher = table.Column<string>(maxLength: 100, nullable: true),
+                    Title = table.Column<string>(maxLength: 100, nullable: true),
                     Poster = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
@@ -105,10 +105,11 @@ namespace MediaCollection.Migrations
                 {
                     SerieID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(nullable: true),
-                    Genre = table.Column<string>(nullable: true),
-                    Director = table.Column<string>(nullable: true),
-                    Cast = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(maxLength: 100, nullable: true),
+                    Synopsis = table.Column<string>(maxLength: 100, nullable: true),
+                    Genre = table.Column<string>(maxLength: 100, nullable: true),
+                    Director = table.Column<string>(maxLength: 100, nullable: true),
+                    Cast = table.Column<string>(maxLength: 100, nullable: true),
                     ReleaseDate = table.Column<DateTime>(nullable: false),
                     Poster = table.Column<byte[]>(nullable: true)
                 },
@@ -144,7 +145,7 @@ namespace MediaCollection.Migrations
                 {
                     AlbumReviewID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Review = table.Column<string>(nullable: true),
+                    Review = table.Column<string>(maxLength: 2048, nullable: true),
                     User = table.Column<string>(nullable: true),
                     AlbumID = table.Column<int>(nullable: true)
                 },
@@ -166,8 +167,8 @@ namespace MediaCollection.Migrations
                     TrackID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TrackNo = table.Column<int>(nullable: false),
-                    TrackName = table.Column<string>(nullable: true),
-                    Artist = table.Column<string>(nullable: true),
+                    TrackName = table.Column<string>(maxLength: 100, nullable: true),
+                    Artist = table.Column<string>(maxLength: 100, nullable: true),
                     Duration = table.Column<TimeSpan>(nullable: false),
                     AlbumID = table.Column<int>(nullable: true)
                 },
@@ -295,6 +296,7 @@ namespace MediaCollection.Migrations
                     MovieRatingID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Rating = table.Column<int>(nullable: false),
+                    User = table.Column<string>(nullable: true),
                     MovieID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -314,7 +316,8 @@ namespace MediaCollection.Migrations
                 {
                     MovieReviewID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Review = table.Column<string>(nullable: true),
+                    Review = table.Column<string>(maxLength: 2048, nullable: true),
+                    User = table.Column<string>(nullable: true),
                     MovieID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -335,11 +338,11 @@ namespace MediaCollection.Migrations
                     PodcastEpisodeID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EpisodeNo = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(maxLength: 100, nullable: true),
                     Duration = table.Column<TimeSpan>(nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
-                    Hosts = table.Column<string>(nullable: true),
-                    Guests = table.Column<string>(nullable: true),
+                    Hosts = table.Column<string>(maxLength: 100, nullable: true),
+                    Guests = table.Column<string>(maxLength: 100, nullable: true),
                     PodcastID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -379,7 +382,7 @@ namespace MediaCollection.Migrations
                 {
                     PodcastReviewID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Review = table.Column<string>(nullable: true),
+                    Review = table.Column<string>(maxLength: 2048, nullable: true),
                     PodcastID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -402,7 +405,7 @@ namespace MediaCollection.Migrations
                     Season = table.Column<int>(nullable: false),
                     EpisodeNo = table.Column<int>(nullable: false),
                     Duration = table.Column<TimeSpan>(nullable: false),
-                    Synopsis = table.Column<string>(nullable: true),
+                    Synopsis = table.Column<string>(maxLength: 512, nullable: true),
                     SerieID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -443,7 +446,7 @@ namespace MediaCollection.Migrations
                 {
                     SerieReviewID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Review = table.Column<string>(nullable: true),
+                    Review = table.Column<string>(maxLength: 2048, nullable: true),
                     User = table.Column<string>(nullable: true),
                     SerieID = table.Column<int>(nullable: true)
                 },
@@ -469,6 +472,16 @@ namespace MediaCollection.Migrations
                 values: new object[] { 1, new TimeSpan(0, 1, 2, 0, 0), 1, 1, null, "Eddard Stark is torn between his family and an old friend when asked to serve at the side of King Robert Baratheon; Viserys plans to wed his sister to a nomadic warlord in exchange for an army." });
 
             migrationBuilder.InsertData(
+                table: "MovieRating",
+                columns: new[] { "MovieRatingID", "MovieID", "Rating", "User" },
+                values: new object[] { 1, null, 9, "cage2005@hotmail.com" });
+
+            migrationBuilder.InsertData(
+                table: "MovieReview",
+                columns: new[] { "MovieReviewID", "MovieID", "Review", "User" },
+                values: new object[] { 1, null, "Can Hollywood, usually creating things for entertainment purposes only, create art? To create something of this nature, a director must approach it in a most meticulous manner, due to the delicacy of the process. Such a daunting task requires an extremely capable artist with an undeniable managerial capacity and an acutely developed awareness of each element of art in their films, the most prominent; music, visuals, script, and acting. These elements, each equally important, must succeed independently, yet still form a harmonious union, because this mixture determines the fate of the artist's opus. Though already well known amongst his colleagues for his notable skills at writing and directing, Frank Darabont emerges with his feature film directorial debut, The Shawshank Redemption. Proving himself already a master of the craft, Darabont managed to create one of the most recognizable independent releases in the history of Hollywood. The Shawshank Redemption defines a genre, defies the odds, compels the emotions, and brings an era of artistically influential films back to Hollywood.", "cage2005@hotmail.com" });
+
+            migrationBuilder.InsertData(
                 table: "Movies",
                 columns: new[] { "MovieID", "Cast", "Director", "Duration", "Genre", "Poster", "ReleaseDate", "Synopsis", "Title" },
                 values: new object[] { 1, "Tim Robbins, Morgan Freeman, Bob Gunton", "Frank Darabont", new TimeSpan(0, 2, 22, 0, 0), "Drama", null, new DateTime(1995, 3, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "The Shawshank Redemption" });
@@ -476,7 +489,7 @@ namespace MediaCollection.Migrations
             migrationBuilder.InsertData(
                 table: "PodcastEpisode",
                 columns: new[] { "PodcastEpisodeID", "Date", "Duration", "EpisodeNo", "Guests", "Hosts", "PodcastID", "Title" },
-                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 12, 45, 0), 1, null, null, null, "De Specht" });
+                values: new object[] { 1, new DateTime(2019, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 12, 45, 0), 1, "", "", null, "De Specht" });
 
             migrationBuilder.InsertData(
                 table: "Podcasts",
@@ -484,9 +497,19 @@ namespace MediaCollection.Migrations
                 values: new object[] { 1, null, "Begijn Le Blue", "Fwiet! Fwiet!" });
 
             migrationBuilder.InsertData(
+                table: "SerieRating",
+                columns: new[] { "SerieRatingID", "Rating", "SerieID", "User" },
+                values: new object[] { 1, 9, null, "cage2005@hotmail.com" });
+
+            migrationBuilder.InsertData(
+                table: "SerieReview",
+                columns: new[] { "SerieReviewID", "Review", "SerieID", "User" },
+                values: new object[] { 1, "It was a master piece. It was written to the perfection. It was mesmerizing. It was gripping. It was so shocking that if someone is binge watching this show he/she will need a time-off in between to get their head around things and accept some messed up, yet mind blowing development. But yet, I cant hate it enough after final season.Its like you came to know that you were in love with the wrong one all along.It was like looking at a completely different person.It was like seeing your own dreams and expectations get destroyed.It was not a let down, it was a BETRAYAL!", null, "cage2005@hotmail.com" });
+
+            migrationBuilder.InsertData(
                 table: "Series",
-                columns: new[] { "SerieID", "Cast", "Director", "Genre", "Poster", "ReleaseDate", "Title" },
-                values: new object[] { 1, "Emilia Clarke, Peter Dinklage, Kit Harrington, Maisie Williams", "D.B. Weiss, David Benioff", "Action, Adventure, Drama", null, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2011), "Game of Thrones" });
+                columns: new[] { "SerieID", "Cast", "Director", "Genre", "Poster", "ReleaseDate", "Synopsis", "Title" },
+                values: new object[] { 1, "Emilia Clarke, Peter Dinklage, Kit Harrington", "D.B. Weiss, David Benioff", "Action, Adventure, Drama", null, new DateTime(2011, 4, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Game of Thrones" });
 
             migrationBuilder.InsertData(
                 table: "Track",

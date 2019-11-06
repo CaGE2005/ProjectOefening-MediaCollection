@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaCollection.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20191105131058_initial-migration")]
-    partial class initialmigration
+    [Migration("20191106134743_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,7 +29,8 @@ namespace MediaCollection.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AlbumArtist")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<byte[]>("Cover")
                         .HasColumnType("varbinary(max)");
@@ -38,13 +39,15 @@ namespace MediaCollection.Migrations
                         .HasColumnType("time");
 
                     b.Property<string>("Genre")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("AlbumID");
 
@@ -96,7 +99,8 @@ namespace MediaCollection.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Review")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(2048)")
+                        .HasMaxLength(2048);
 
                     b.Property<string>("User")
                         .HasColumnType("nvarchar(max)");
@@ -128,7 +132,8 @@ namespace MediaCollection.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Synopsis")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(512)")
+                        .HasMaxLength(512);
 
                     b.HasKey("EpisodeID");
 
@@ -155,16 +160,19 @@ namespace MediaCollection.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Cast")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Director")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
                     b.Property<string>("Genre")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<byte[]>("Poster")
                         .HasColumnType("varbinary(max)");
@@ -173,10 +181,12 @@ namespace MediaCollection.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Synopsis")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(512)")
+                        .HasMaxLength(512);
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("MovieID");
 
@@ -209,11 +219,22 @@ namespace MediaCollection.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
+                    b.Property<string>("User")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("MovieRatingID");
 
                     b.HasIndex("MovieID");
 
                     b.ToTable("MovieRating");
+
+                    b.HasData(
+                        new
+                        {
+                            MovieRatingID = 1,
+                            Rating = 9,
+                            User = "cage2005@hotmail.com"
+                        });
                 });
 
             modelBuilder.Entity("MediaCollection.Database.MovieReview", b =>
@@ -227,6 +248,10 @@ namespace MediaCollection.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Review")
+                        .HasColumnType("nvarchar(2048)")
+                        .HasMaxLength(2048);
+
+                    b.Property<string>("User")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MovieReviewID");
@@ -234,6 +259,14 @@ namespace MediaCollection.Migrations
                     b.HasIndex("MovieID");
 
                     b.ToTable("MovieReview");
+
+                    b.HasData(
+                        new
+                        {
+                            MovieReviewID = 1,
+                            Review = "Can Hollywood, usually creating things for entertainment purposes only, create art? To create something of this nature, a director must approach it in a most meticulous manner, due to the delicacy of the process. Such a daunting task requires an extremely capable artist with an undeniable managerial capacity and an acutely developed awareness of each element of art in their films, the most prominent; music, visuals, script, and acting. These elements, each equally important, must succeed independently, yet still form a harmonious union, because this mixture determines the fate of the artist's opus. Though already well known amongst his colleagues for his notable skills at writing and directing, Frank Darabont emerges with his feature film directorial debut, The Shawshank Redemption. Proving himself already a master of the craft, Darabont managed to create one of the most recognizable independent releases in the history of Hollywood. The Shawshank Redemption defines a genre, defies the odds, compels the emotions, and brings an era of artistically influential films back to Hollywood.",
+                            User = "cage2005@hotmail.com"
+                        });
                 });
 
             modelBuilder.Entity("MediaCollection.Database.Podcast", b =>
@@ -247,10 +280,12 @@ namespace MediaCollection.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Publisher")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("PodcastID");
 
@@ -282,16 +317,19 @@ namespace MediaCollection.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Guests")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Hosts")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<int?>("PodcastID")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("PodcastEpisodeID");
 
@@ -303,9 +341,11 @@ namespace MediaCollection.Migrations
                         new
                         {
                             PodcastEpisodeID = 1,
-                            Date = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2019, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Duration = new TimeSpan(0, 0, 12, 45, 0),
                             EpisodeNo = 1,
+                            Guests = "",
+                            Hosts = "",
                             Title = "De Specht"
                         });
                 });
@@ -341,7 +381,8 @@ namespace MediaCollection.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Review")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(2048)")
+                        .HasMaxLength(2048);
 
                     b.HasKey("PodcastReviewID");
 
@@ -358,13 +399,16 @@ namespace MediaCollection.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Cast")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Director")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Genre")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<byte[]>("Poster")
                         .HasColumnType("varbinary(max)");
@@ -372,8 +416,13 @@ namespace MediaCollection.Migrations
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Synopsis")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
                     b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("SerieID");
 
@@ -383,10 +432,10 @@ namespace MediaCollection.Migrations
                         new
                         {
                             SerieID = 1,
-                            Cast = "Emilia Clarke, Peter Dinklage, Kit Harrington, Maisie Williams",
+                            Cast = "Emilia Clarke, Peter Dinklage, Kit Harrington",
                             Director = "D.B. Weiss, David Benioff",
                             Genre = "Action, Adventure, Drama",
-                            ReleaseDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(2011),
+                            ReleaseDate = new DateTime(2011, 4, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Title = "Game of Thrones"
                         });
                 });
@@ -412,6 +461,14 @@ namespace MediaCollection.Migrations
                     b.HasIndex("SerieID");
 
                     b.ToTable("SerieRating");
+
+                    b.HasData(
+                        new
+                        {
+                            SerieRatingID = 1,
+                            Rating = 9,
+                            User = "cage2005@hotmail.com"
+                        });
                 });
 
             modelBuilder.Entity("MediaCollection.Database.SerieReview", b =>
@@ -422,7 +479,8 @@ namespace MediaCollection.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Review")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(2048)")
+                        .HasMaxLength(2048);
 
                     b.Property<int?>("SerieID")
                         .HasColumnType("int");
@@ -435,6 +493,14 @@ namespace MediaCollection.Migrations
                     b.HasIndex("SerieID");
 
                     b.ToTable("SerieReview");
+
+                    b.HasData(
+                        new
+                        {
+                            SerieReviewID = 1,
+                            Review = "It was a master piece. It was written to the perfection. It was mesmerizing. It was gripping. It was so shocking that if someone is binge watching this show he/she will need a time-off in between to get their head around things and accept some messed up, yet mind blowing development. But yet, I cant hate it enough after final season.Its like you came to know that you were in love with the wrong one all along.It was like looking at a completely different person.It was like seeing your own dreams and expectations get destroyed.It was not a let down, it was a BETRAYAL!",
+                            User = "cage2005@hotmail.com"
+                        });
                 });
 
             modelBuilder.Entity("MediaCollection.Database.Track", b =>
@@ -448,13 +514,15 @@ namespace MediaCollection.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Artist")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");
 
                     b.Property<string>("TrackName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<int>("TrackNo")
                         .HasColumnType("int");
@@ -713,7 +781,7 @@ namespace MediaCollection.Migrations
 
             modelBuilder.Entity("MediaCollection.Database.PodcastEpisode", b =>
                 {
-                    b.HasOne("MediaCollection.Database.Podcast", null)
+                    b.HasOne("MediaCollection.Database.Podcast", "Podcast")
                         .WithMany("Episodes")
                         .HasForeignKey("PodcastID");
                 });

@@ -10,28 +10,33 @@ namespace MediaCollection.Database
     {
         public int SerieID { get; set; }
 
-        [StringLength(50)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [StringLength(100)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Title")]
         public string Title { get; set; }
 
-        [StringLength(50)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [StringLength(100)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
+        [Display(Name = "Synopsis")]
+        public string Synopsis { get; set; }
+
+        [StringLength(100)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Genre(s)")]
         public string Genre { get; set; }
 
-        [StringLength(50)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [StringLength(100)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Director(s)")]
         public string Director { get; set; }
 
-        [StringLength(50)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [StringLength(100)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Cast")]
         public string Cast { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "0:dd-mm-yyyy", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = @"{0:yyyy-MM-dddd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Release Date")]
         public DateTime ReleaseDate { get; set; }
 
@@ -58,11 +63,11 @@ namespace MediaCollection.Database
 
         [RegularExpression(@"0-9")]
         [Display(Name = "Duration")]
-        [DisplayFormat(DataFormatString = "0:hh:mm", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = @"{0:hh\:mm}", ApplyFormatInEditMode = true)]
         public TimeSpan Duration { get; set; }
 
-        [StringLength(256)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [StringLength(512)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Synopsis")]
         public string Synopsis { get; set; }
 
@@ -73,7 +78,7 @@ namespace MediaCollection.Database
     {
         public int SerieRatingID { get; set; }
 
-        [RegularExpression(@"0-9")]
+        [RegularExpression(@"[0-9]")]
         [Range(1, 10)]
         [Display(Name = "Rating")]
         public int Rating { get; set; }
@@ -87,8 +92,8 @@ namespace MediaCollection.Database
     { 
         public int SerieReviewID { get; set; }
 
-        [StringLength(512)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [StringLength(2048)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Review")]
         public string Review { get; set; }
 

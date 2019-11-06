@@ -10,12 +10,12 @@ namespace MediaCollection.Database
     {
         public int MovieID { get; set; }    
         
-        [StringLength(50)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [StringLength(100)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Title")]
         public string Title { get; set; }
         
-        [StringLength(50)]
+        [StringLength(100)]
         [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Genre(s)")]
         public string Genre { get; set; }
@@ -26,22 +26,22 @@ namespace MediaCollection.Database
         public TimeSpan Duration { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = @"{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = @"{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ReleaseDate { get; set; }
 
-        [StringLength(256)]
+        [StringLength(512)]
         [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Synopsis")]
         public string Synopsis { get; set; }
 
         public byte[] Poster { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Director(s)")]
         public string Director { get; set; }
 
-        [StringLength(50)]
+        [StringLength(100)]
         [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Cast")]
         public string Cast { get; set; }
@@ -67,7 +67,7 @@ namespace MediaCollection.Database
     {
         public int MovieReviewID { get; set; }
         
-        [StringLength(512)]
+        [StringLength(2048)]
         [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
         [Display(Name = "Review")]
         public string Review { get; set; }

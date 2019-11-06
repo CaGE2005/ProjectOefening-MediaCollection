@@ -10,13 +10,13 @@ namespace MediaCollection.Database
     {
         public int PodcastID { get; set; }
 
-        [StringLength(50)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [StringLength(100)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Publisher")]
         public string Publisher { get; set; }
 
-        [StringLength(50)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [StringLength(100)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Podcast Title")]
         public string Title { get; set; }
 
@@ -31,41 +31,43 @@ namespace MediaCollection.Database
     {
         public int PodcastEpisodeID { get; set; }
 
-        [RegularExpression(@"0-9")]
+        [RegularExpression(@"[0-9]")]
         [Range(1, 10)]
         [Display(Name = "Episode #")]
         public int EpisodeNo { get; set; }
 
-        [StringLength(50)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [StringLength(100)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Episode Title")]
         public string Title { get; set; }
 
-        [RegularExpression(@"0-9")]
+        [RegularExpression(@"[0-9]")]
         [Display(Name = "Duration")]
-        [DisplayFormat(DataFormatString = "0:hh:mm", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = @"{0:hh\:mm}", ApplyFormatInEditMode = true)]
         public TimeSpan Duration { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "0:dd-mm-yyyy", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = @"{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
 
-        [StringLength(50)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [StringLength(100)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Host(s)")]
         public string Hosts { get; set; }
 
-        [StringLength(50)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [StringLength(100)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Guest(s)")]
         public string Guests { get; set; }
+
+        public virtual Podcast Podcast { get; set; }
     }
 
     public class PodcastRating
     {
         public int PodcastRatingID { get; set; }
 
-        [RegularExpression(@"0-9")]
+        [RegularExpression(@"[0-9]")]
         [Range(1, 10)]
         [Display(Name = "Rating")]
         public int Rating { get; set; }
@@ -77,8 +79,8 @@ namespace MediaCollection.Database
     {
         public int PodcastReviewID { get; set; }
 
-        [StringLength(512)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-]*$")]
+        [StringLength(2048)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Review")]
         public string Review { get; set; }
 
