@@ -4,6 +4,8 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MediaCollection.Database;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace MediaCollection.Data
 {
@@ -17,10 +19,12 @@ namespace MediaCollection.Data
         public DbSet<Movie> Movies { get; set; }
         public DbSet<MovieRating> MovieRatings { get; set; }
         public DbSet<MovieReview> MovieReviews { get; set; }
+
         public DbSet<Serie> Series { get; set; }
         public DbSet<Episode> Episodes { get; set; }
         public DbSet<SerieRating> SerieRatings { get; set; }
         public DbSet<SerieReview> SerieReviews { get; set; }
+
         public DbSet<Album> Albums { get; set; }
         public DbSet<Track> Tracks { get; set; }
         public DbSet<AlbumRating> AlbumRatings { get; set; }
@@ -31,9 +35,10 @@ namespace MediaCollection.Data
         public DbSet<PodcastRating> PodcastRatings { get; set; }
         public DbSet<PodcastReview> PodcastReviews { get; set; }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
+
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Movie>().HasData(
@@ -49,7 +54,7 @@ namespace MediaCollection.Data
                     Cast = "Tim Robbins, Morgan Freeman, Bob Gunton",
                     MovieRatingID = 1,
                     MovieReviewID = 1
-                });
+                }); ;
 
             modelBuilder.Entity<MovieRating>().HasData(
                 new

@@ -61,7 +61,7 @@ namespace MediaCollection.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SerieID,Title,Genre,Director,Cast,ReleaseDate,Poster,Seasons")] Serie serie, IFormFile newPoster)
+        public async Task<IActionResult> Create([Bind("SerieID,Title,Genre,Director,Cast,ReleaseDate,Poster,Seasons,Synopsis")] Serie serie, IFormFile newPoster)
         {
             if (newPoster != null)
             {

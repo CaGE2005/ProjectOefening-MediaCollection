@@ -41,8 +41,8 @@ namespace MediaCollection.Controllers
                 .Include(a => a.Reviews)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(a => a.AlbumID == id);
-            
-            if(album == null)
+
+            if (album == null)
             {
                 return NotFound();
             }
@@ -62,8 +62,11 @@ namespace MediaCollection.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AlbumID,Title,Genre,AlbumArtist,ReleaseDate,Duration,Cover")] Album album, IFormFile newCover)
-        { 
-            if (newCover != null)
+        {
+
+            if (ModelState.IsValid)
+            {
+                if (newCover != null)
                 {
                     using (var memoryStream = new MemoryStream())
                     {
@@ -72,8 +75,6 @@ namespace MediaCollection.Controllers
                     }
                 }
 
-            if (ModelState.IsValid)
-            {               
                 _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -108,20 +109,21 @@ namespace MediaCollection.Controllers
             {
                 return NotFound();
             }
-            
-            if (newCover != null)
-            {
-                using (var memoryStream = new MemoryStream())
-                {
-                    await newCover.CopyToAsync(memoryStream);
-                    album.Cover = memoryStream.ToArray();
-                }
-            }
+
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    if (newCover != null)
+                    {                        
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await newCover.CopyToAsync(memoryStream);
+                            album.Cover = memoryStream.ToArray();
+                        }
+                    }
+
                     _context.Update(album);
                     await _context.SaveChangesAsync();
                 }
