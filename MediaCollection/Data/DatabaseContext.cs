@@ -139,7 +139,7 @@ namespace MediaCollection.Data
                     Title = "Dark Side of the Moon",
                     Genre = "Experimental Rock",
                     AlbumArtist = "Pink Floyd",
-                    ReleaseDate = new DateTime(1973),
+                    ReleaseDate = new DateTime(1973,1,3),
                     Duration = new TimeSpan(0, 0, 48, 0),
                     TrackID = 1,
                     AlbumRatingID = 1

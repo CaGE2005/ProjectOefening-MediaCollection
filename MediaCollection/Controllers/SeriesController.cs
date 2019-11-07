@@ -36,6 +36,7 @@ namespace MediaCollection.Controllers
             }
 
             var serie = await _context.Series
+                .Include(s => s.Episodes)
                 .Include(s => s.Ratings)
                 .Include(s => s.Reviews)
                 .AsNoTracking()

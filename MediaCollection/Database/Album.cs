@@ -11,17 +11,17 @@ namespace MediaCollection.Database
         public int AlbumID { get; set; }
 
         [StringLength(100)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-.,]*$")]
+        [RegularExpression(@"^[A-Z0-9]+[0-9a-zA-Z""'\s-.,]*$")]
         [Display(Name = "Title")]
         public string Title { get; set; }
 
         [StringLength(100)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-.,]*$")]
+        [RegularExpression(@"^[A-Z0-9]+[0-9a-zA-Z""'\s-.,]*$")]
         [Display(Name = "Genre(s)")]
         public string Genre { get; set; }
 
         [StringLength(100)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-.,]*$")]
+        [RegularExpression(@"^[A-Z0-9]+[0-9a-zA-Z""'\s-.,]*$")]
         [Display(Name = "Artist(s)")]
         public string AlbumArtist { get; set; }
 
@@ -48,12 +48,12 @@ namespace MediaCollection.Database
         [Display(Name = "Track")]
         public int TrackNo { get; set; }
         [StringLength(100)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
+        [RegularExpression(@"^[A-Z0-9]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Title")]
         public string TrackName { get; set; }
 
         [StringLength(100)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
+        [RegularExpression(@"^[A-Z0-9]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Artist(s)")]
         public string Artist { get; set; }
 
@@ -84,7 +84,7 @@ namespace MediaCollection.Database
         public int AlbumReviewID { get; set; }
 
         [StringLength(2048)]
-        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
+        [RegularExpression(@"^[A-Z0-9]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Review")]
         public string Review { get; set; }  
         
