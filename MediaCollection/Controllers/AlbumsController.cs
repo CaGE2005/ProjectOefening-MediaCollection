@@ -103,7 +103,7 @@ namespace MediaCollection.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AlbumID,Title,Genre,AlbumArtist,ReleaseDate,Duration,Cover")] Album album, IFormFile newCover)
+        public async Task<IActionResult> Edit(int id, [Bind("AlbumID,Title,Genre,AlbumArtist,ReleaseDate,Duration,Cover,Synopsis")] Album album, IFormFile newCover)
         {
             if (id != album.AlbumID)
             {

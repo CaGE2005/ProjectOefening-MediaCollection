@@ -43,6 +43,10 @@ namespace MediaCollection.Migrations
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Synopsis")
+                        .HasColumnType("nvarchar(512)")
+                        .HasMaxLength(512);
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
@@ -58,7 +62,8 @@ namespace MediaCollection.Migrations
                             AlbumArtist = "Pink Floyd",
                             Duration = new TimeSpan(0, 0, 48, 0, 0),
                             Genre = "Experimental Rock",
-                            ReleaseDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1973),
+                            ReleaseDate = new DateTime(1973, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Synopsis = "The Dark Side of the Moon is the eighth studio album by English rock band Pink Floyd, released on 1 March 1973 by Harvest Records.Primarily developed during live performances, the band premiered an early version of the record several months before recording began.New material was recorded in two sessions in 1972 and 1973 at Abbey Road Studios in London.",
                             Title = "Dark Side of the Moon"
                         });
                 });

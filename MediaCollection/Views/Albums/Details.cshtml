@@ -58,15 +58,12 @@
                             <p><img src="@imgSrc" class="display:block img-fluid" /></p>
                         </div>
                         <div class="col-sm-7 bg-light text-dark">
-                            @foreach (var track in Model.Tracks)
-                            {
-                                <p>@track.TrackNo @track.TrackName @track.Duration</p>
-                            }
+                            <p>@Model.Synopsis</p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-12 bg-dark text-light">
-                            <p> </p>
+                            <br/>
                         </div>
                     </div>
                 </div>
@@ -79,7 +76,12 @@
 
         </div>
 
-        <div class="col-sm-3 bg-info"></div>
+        <div class="col-sm-3 bg-info">
+            @foreach (var track in Model.Tracks)
+            {
+                <p>@track.TrackNo . @track.TrackName <br/>@track.Duration</p>
+            }
+        </div>
 
     </div>
 

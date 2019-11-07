@@ -18,6 +18,7 @@ namespace MediaCollection.Migrations
                     AlbumArtist = table.Column<string>(maxLength: 100, nullable: true),
                     ReleaseDate = table.Column<DateTime>(nullable: false),
                     Duration = table.Column<TimeSpan>(nullable: false),
+                    Synopsis = table.Column<string>(maxLength: 512, nullable: true),
                     Cover = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
@@ -465,8 +466,8 @@ namespace MediaCollection.Migrations
 
             migrationBuilder.InsertData(
                 table: "Albums",
-                columns: new[] { "AlbumID", "AlbumArtist", "Cover", "Duration", "Genre", "ReleaseDate", "Title" },
-                values: new object[] { 1, "Pink Floyd", null, new TimeSpan(0, 0, 48, 0, 0), "Experimental Rock", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1973), "Dark Side of the Moon" });
+                columns: new[] { "AlbumID", "AlbumArtist", "Cover", "Duration", "Genre", "ReleaseDate", "Synopsis", "Title" },
+                values: new object[] { 1, "Pink Floyd", null, new TimeSpan(0, 0, 48, 0, 0), "Experimental Rock", new DateTime(1973, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "The Dark Side of the Moon is the eighth studio album by English rock band Pink Floyd, released on 1 March 1973 by Harvest Records.Primarily developed during live performances, the band premiered an early version of the record several months before recording began.New material was recorded in two sessions in 1972 and 1973 at Abbey Road Studios in London.", "Dark Side of the Moon" });
 
             migrationBuilder.InsertData(
                 table: "Movies",

@@ -32,6 +32,11 @@ namespace MediaCollection.Database
         [Display(Name = "Duration")]
         [DisplayFormat(DataFormatString = @"{0:hh\:mm}", ApplyFormatInEditMode = true)]
         public TimeSpan Duration { get; set; }
+
+        [StringLength(512)]
+        [RegularExpression(@"^[A-Z0-9]+[0-9a-zA-Z""'\s-.,]*$")]
+        [Display(Name = "Synopsis")]
+        public string Synopsis { get; set; }
         public byte[] Cover { get; set; }
 
         public virtual ICollection<Track> Tracks { get; set; }
