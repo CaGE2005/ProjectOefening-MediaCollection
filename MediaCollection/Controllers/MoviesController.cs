@@ -23,7 +23,7 @@ namespace MediaCollection.Controllers
         }
 
         // GET: Movies
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
             return View(await _context.Movies.ToListAsync());
         }
@@ -34,14 +34,14 @@ namespace MediaCollection.Controllers
             if (id == null)
             {
                 return NotFound();
-            }            
+            }
 
             var movie = await _context.Movies
                 .Include(m => m.Ratings)
                 .Include(m => m.Reviews)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.MovieID == id);
- 
+
             if (movie == null)
             {
                 return NotFound();
@@ -61,19 +61,19 @@ namespace MediaCollection.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieID,Title,Genre,Duration,ReleaseDate,Synopsis,Poster,Director,Cast")] Movie movie ,IFormFile newPoster)
+        public async Task<IActionResult> Create([Bind("MovieID,Title,Genre,Duration,ReleaseDate,Synopsis,Poster,Director,Cast")] Movie movie, IFormFile newPoster)
         {
+            if (newPoster != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await newPoster.CopyToAsync(memoryStream);
+                    movie.Poster = memoryStream.ToArray();
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                if (newPoster != null)
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        await newPoster.CopyToAsync(memoryStream);
-                        movie.Poster = memoryStream.ToArray();
-                    }
-                }
-
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -109,17 +109,17 @@ namespace MediaCollection.Controllers
                 return NotFound();
             }
 
+            if (newPoster != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await newPoster.CopyToAsync(memoryStream);
+                    movie.Poster = memoryStream.ToArray();
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                if (newPoster != null)
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        newPoster.CopyTo(memoryStream);
-                        movie.Poster = memoryStream.ToArray();
-                    }
-                }
-
                 try
                 {
                     _context.Update(movie);
@@ -168,7 +168,7 @@ namespace MediaCollection.Controllers
             _context.Movies.Remove(movie);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }      
+        }
 
         private bool MovieExists(int id)
         {

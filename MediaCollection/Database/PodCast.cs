@@ -20,11 +20,16 @@ namespace MediaCollection.Database
         [Display(Name = "Podcast Title")]
         public string Title { get; set; }
 
+        [StringLength(512)]
+        [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
+        [Display(Name = "Synopsis")]
+        public string Synopsis { get; set; }
+
         public byte[] Poster { get; set; }
 
         public ICollection<PodcastEpisode> Episodes { get; set; }
         public ICollection<PodcastRating> Ratings { get; set; }
-        public ICollection<PodcastReview> podcastReviews { get; set; }
+        public ICollection<PodcastReview> Reviews { get; set; }
     }
 
     public class PodcastEpisode
@@ -83,6 +88,8 @@ namespace MediaCollection.Database
         [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Review")]
         public string Review { get; set; }
+                
+        public string User { get; set; }
 
         public virtual Podcast Podcast { get; set; }
     }

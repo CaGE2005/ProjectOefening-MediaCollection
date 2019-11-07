@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MediaCollection.Data;
 using MediaCollection.Database;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace MediaCollection.Controllers
 {
@@ -34,6 +36,10 @@ namespace MediaCollection.Controllers
             }
 
             var podCast = await _context.Podcasts
+                .Include(p => p.Episodes)
+                .Include(p => p.Reviews)
+                .Include(p => p.Ratings)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(m => m.PodcastID == id);
             if (podCast == null)
             {
@@ -54,8 +60,17 @@ namespace MediaCollection.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PodcastID,Publisher,Title,StartDate,Poster")] Podcast podCast)
+        public async Task<IActionResult> Create([Bind("PodcastID,Publisher,Title,StartDate,Poster")] Podcast podCast, IFormFile newPoster)
         {
+            if (newPoster != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await newPoster.CopyToAsync(memoryStream);
+                    podCast.Poster = memoryStream.ToArray();
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(podCast);
@@ -86,11 +101,20 @@ namespace MediaCollection.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PodcastID,Publisher,Title,StartDate,Poster")] Podcast podCast)
+        public async Task<IActionResult> Edit(int id, [Bind("PodcastID,Publisher,Title,StartDate,Poster")] Podcast podCast, IFormFile newPoster)
         {
             if (id != podCast.PodcastID)
             {
                 return NotFound();
+            }
+
+            if (newPoster != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await newPoster.CopyToAsync(memoryStream);
+                    podCast.Poster = memoryStream.ToArray();
+                }
             }
 
             if (ModelState.IsValid)

@@ -6,31 +6,118 @@
 
 <h1>Details</h1>
 
-<div>
-    <h4>PodCast</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Publisher)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Publisher)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>       
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Poster)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Poster)
-        </dd>
-    </dl>
+@{
+    string imgSrc = "";
+
+    if (Model.Poster != null)
+    {
+        var base64 = Convert.ToBase64String(Model.Poster);
+        imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+    }
+}
+
+@{
+    int rating = 0;
+    int count = 0;
+    foreach (var userrating in Model.Ratings)
+    {
+        count++;
+        rating += userrating.Rating;
+    }
+    rating = rating / count;
+}
+
+<div class="container" lang="en">
+    <div class="row">
+        <div class="col-sm-9">
+
+            <div class="row">
+
+                <div class="col-sm-1 bg-dark text-light">
+                    <h1>
+                        <a href="~/images/add_to_playlist.png">
+                            <img src="~/images/add_to_playlist.png" class="margin:auto display:block img-fluid" alt="Add to playlist" onmouseover="PopStateEvent" />
+                        </a>
+                    </h1>
+                </div>
+
+                <div class="col-sm-10">
+
+                    <div class="row">
+                        <div class="col-sm-10 bg-dark text-light">
+                            <h1>@Model.Title</h1>                            
+                        </div>
+                        <div class="col-sm-2 bg-dark text-light">
+                            <img src="~/images/heart full.png" class="img-fluid" style="max-height:30%; max-width:30%" />
+                            <h2>@rating /10</h2>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-5 bg-dark text-light">
+                            <p><img src="@imgSrc" class="display:block img-fluid" /></p>
+                        </div>
+                        <div class="col-sm-7 bg-light text-dark">
+                            <p>@Model.Synopsis</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 bg-dark text-light">
+                            <br />
+                            <p>Publisher: @Model.Publisher</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-sm-1 bg-dark text-light">
+                    <img src="~/images/heart empty.png" class="img-fluid" />
+                    <h1 class="small text-right">RATE THIS</h1>
+                </div>
+
+            </div>
+
+        </div>
+        @foreach (var episode in Model.Episodes)
+        {
+            <p>@episode.Podcast @episode.Title</p>
+            <p>Host(s): @episode.Hosts</p>
+            <p>Guests: @episode.Guests</p>
+            <br/>
+        }
+        <div class="col-sm-3 bg-info"></div>
+
+    </div>
+
 </div>
+
 <div>
     <a asp-action="Edit" asp-route-id="@Model.PodcastID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 bg-dark text-light">
+            <h3>Reviews</h3>
+        </div>
+    </div>
+</div>
+
+@foreach (var review in Model.Reviews)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 bg-dark text-light border border-dark">
+                <h6>Review by: @review.User </h6>
+            </div>
+            <div class="col-sm-12 bg-light text-dark border border-dark">
+                <p>@review.Review</p>
+            </div>
+        </div>
+    </div>
+}
+
+

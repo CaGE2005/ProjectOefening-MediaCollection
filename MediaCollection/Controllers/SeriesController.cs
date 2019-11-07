@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MediaCollection.Data;
 using MediaCollection.Database;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace MediaCollection.Controllers
 {
@@ -34,7 +36,11 @@ namespace MediaCollection.Controllers
             }
 
             var serie = await _context.Series
-                .FirstOrDefaultAsync(m => m.SerieID == id);
+                .Include(s => s.Ratings)
+                .Include(s => s.Reviews)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(s => s.SerieID == id);
+
             if (serie == null)
             {
                 return NotFound();
@@ -54,8 +60,17 @@ namespace MediaCollection.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SerieID,Title,Genre,Director,Cast,ReleaseDate,Poster,Seasons")] Serie serie)
+        public async Task<IActionResult> Create([Bind("SerieID,Title,Genre,Director,Cast,ReleaseDate,Poster,Seasons")] Serie serie, IFormFile newPoster)
         {
+            if (newPoster != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await newPoster.CopyToAsync(memoryStream);
+                    serie.Poster = memoryStream.ToArray();
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(serie);
@@ -86,11 +101,20 @@ namespace MediaCollection.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SerieID,Title,Genre,Director,Cast,ReleaseDate,Poster,Seasons")] Serie serie)
+        public async Task<IActionResult> Edit(int id, [Bind("SerieID,Title,Genre,Director,Cast,ReleaseDate,Poster,Seasons")] Serie serie, IFormFile newPoster)
         {
             if (id != serie.SerieID)
             {
                 return NotFound();
+            }
+
+            if (newPoster != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await newPoster.CopyToAsync(memoryStream);
+                    serie.Poster = memoryStream.ToArray();
+                }
             }
 
             if (ModelState.IsValid)

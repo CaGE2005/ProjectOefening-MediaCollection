@@ -15,7 +15,7 @@ namespace MediaCollection.Database
         [Display(Name = "Title")]
         public string Title { get; set; }
 
-        [StringLength(100)]
+        [StringLength(512)]
         [RegularExpression(@"^[A-Z]+[0-9a-zA-Z""'\s-,.]*$")]
         [Display(Name = "Synopsis")]
         public string Synopsis { get; set; }
@@ -36,7 +36,7 @@ namespace MediaCollection.Database
         public string Cast { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = @"{0:yyyy-MM-dddd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = @"{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Release Date")]
         public DateTime ReleaseDate { get; set; }
 

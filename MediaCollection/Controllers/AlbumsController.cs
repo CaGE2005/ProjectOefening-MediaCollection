@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MediaCollection.Data;
 using MediaCollection.Database;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace MediaCollection.Controllers
 {
@@ -34,8 +36,13 @@ namespace MediaCollection.Controllers
             }
 
             var album = await _context.Albums
-                .FirstOrDefaultAsync(m => m.AlbumID == id);
-            if (album == null)
+                .Include(a => a.Tracks)
+                .Include(a => a.Ratings)
+                .Include(a => a.Reviews)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.AlbumID == id);
+            
+            if(album == null)
             {
                 return NotFound();
             }
@@ -54,10 +61,19 @@ namespace MediaCollection.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AlbumID,Title,Genre,AlbumArtist,ReleaseDate,Duration,Cover")] Album album)
-        {
+        public async Task<IActionResult> Create([Bind("AlbumID,Title,Genre,AlbumArtist,ReleaseDate,Duration,Cover")] Album album, IFormFile newCover)
+        { 
+            if (newCover != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await newCover.CopyToAsync(memoryStream);
+                        album.Cover = memoryStream.ToArray();
+                    }
+                }
+
             if (ModelState.IsValid)
-            {
+            {               
                 _context.Add(album);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,11 +102,20 @@ namespace MediaCollection.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AlbumID,Title,Genre,AlbumArtist,ReleaseDate,Duration,Cover")] Album album)
+        public async Task<IActionResult> Edit(int id, [Bind("AlbumID,Title,Genre,AlbumArtist,ReleaseDate,Duration,Cover")] Album album, IFormFile newCover)
         {
             if (id != album.AlbumID)
             {
                 return NotFound();
+            }
+            
+            if (newCover != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await newCover.CopyToAsync(memoryStream);
+                    album.Cover = memoryStream.ToArray();
+                }
             }
 
             if (ModelState.IsValid)

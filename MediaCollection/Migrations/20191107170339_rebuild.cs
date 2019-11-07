@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MediaCollection.Migrations
 {
-    public partial class init : Migration
+    public partial class rebuild : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -92,6 +92,7 @@ namespace MediaCollection.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Publisher = table.Column<string>(maxLength: 100, nullable: true),
                     Title = table.Column<string>(maxLength: 100, nullable: true),
+                    Synopsis = table.Column<string>(maxLength: 512, nullable: true),
                     Poster = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
@@ -106,7 +107,7 @@ namespace MediaCollection.Migrations
                     SerieID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(maxLength: 100, nullable: true),
-                    Synopsis = table.Column<string>(maxLength: 100, nullable: true),
+                    Synopsis = table.Column<string>(maxLength: 512, nullable: true),
                     Genre = table.Column<string>(maxLength: 100, nullable: true),
                     Director = table.Column<string>(maxLength: 100, nullable: true),
                     Cast = table.Column<string>(maxLength: 100, nullable: true),
@@ -119,7 +120,7 @@ namespace MediaCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AlbumRating",
+                name: "AlbumRatings",
                 columns: table => new
                 {
                     AlbumRatingID = table.Column<int>(nullable: false)
@@ -130,9 +131,9 @@ namespace MediaCollection.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AlbumRating", x => x.AlbumRatingID);
+                    table.PrimaryKey("PK_AlbumRatings", x => x.AlbumRatingID);
                     table.ForeignKey(
-                        name: "FK_AlbumRating_Albums_AlbumID",
+                        name: "FK_AlbumRatings_Albums_AlbumID",
                         column: x => x.AlbumID,
                         principalTable: "Albums",
                         principalColumn: "AlbumID",
@@ -140,7 +141,7 @@ namespace MediaCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AlbumReview",
+                name: "AlbumReviews",
                 columns: table => new
                 {
                     AlbumReviewID = table.Column<int>(nullable: false)
@@ -151,9 +152,9 @@ namespace MediaCollection.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AlbumReview", x => x.AlbumReviewID);
+                    table.PrimaryKey("PK_AlbumReviews", x => x.AlbumReviewID);
                     table.ForeignKey(
-                        name: "FK_AlbumReview_Albums_AlbumID",
+                        name: "FK_AlbumReviews_Albums_AlbumID",
                         column: x => x.AlbumID,
                         principalTable: "Albums",
                         principalColumn: "AlbumID",
@@ -161,7 +162,7 @@ namespace MediaCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Track",
+                name: "Tracks",
                 columns: table => new
                 {
                     TrackID = table.Column<int>(nullable: false)
@@ -174,9 +175,9 @@ namespace MediaCollection.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Track", x => x.TrackID);
+                    table.PrimaryKey("PK_Tracks", x => x.TrackID);
                     table.ForeignKey(
-                        name: "FK_Track_Albums_AlbumID",
+                        name: "FK_Tracks_Albums_AlbumID",
                         column: x => x.AlbumID,
                         principalTable: "Albums",
                         principalColumn: "AlbumID",
@@ -290,7 +291,7 @@ namespace MediaCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MovieRating",
+                name: "MovieRatings",
                 columns: table => new
                 {
                     MovieRatingID = table.Column<int>(nullable: false)
@@ -301,9 +302,9 @@ namespace MediaCollection.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieRating", x => x.MovieRatingID);
+                    table.PrimaryKey("PK_MovieRatings", x => x.MovieRatingID);
                     table.ForeignKey(
-                        name: "FK_MovieRating_Movies_MovieID",
+                        name: "FK_MovieRatings_Movies_MovieID",
                         column: x => x.MovieID,
                         principalTable: "Movies",
                         principalColumn: "MovieID",
@@ -311,7 +312,7 @@ namespace MediaCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MovieReview",
+                name: "MovieReviews",
                 columns: table => new
                 {
                     MovieReviewID = table.Column<int>(nullable: false)
@@ -322,9 +323,9 @@ namespace MediaCollection.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MovieReview", x => x.MovieReviewID);
+                    table.PrimaryKey("PK_MovieReviews", x => x.MovieReviewID);
                     table.ForeignKey(
-                        name: "FK_MovieReview_Movies_MovieID",
+                        name: "FK_MovieReviews_Movies_MovieID",
                         column: x => x.MovieID,
                         principalTable: "Movies",
                         principalColumn: "MovieID",
@@ -332,7 +333,7 @@ namespace MediaCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PodcastEpisode",
+                name: "PodcastEpisodes",
                 columns: table => new
                 {
                     PodcastEpisodeID = table.Column<int>(nullable: false)
@@ -347,9 +348,9 @@ namespace MediaCollection.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PodcastEpisode", x => x.PodcastEpisodeID);
+                    table.PrimaryKey("PK_PodcastEpisodes", x => x.PodcastEpisodeID);
                     table.ForeignKey(
-                        name: "FK_PodcastEpisode_Podcasts_PodcastID",
+                        name: "FK_PodcastEpisodes_Podcasts_PodcastID",
                         column: x => x.PodcastID,
                         principalTable: "Podcasts",
                         principalColumn: "PodcastID",
@@ -357,7 +358,7 @@ namespace MediaCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PodcastRating",
+                name: "PodcastRatings",
                 columns: table => new
                 {
                     PodcastRatingID = table.Column<int>(nullable: false)
@@ -367,9 +368,9 @@ namespace MediaCollection.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PodcastRating", x => x.PodcastRatingID);
+                    table.PrimaryKey("PK_PodcastRatings", x => x.PodcastRatingID);
                     table.ForeignKey(
-                        name: "FK_PodcastRating_Podcasts_PodcastID",
+                        name: "FK_PodcastRatings_Podcasts_PodcastID",
                         column: x => x.PodcastID,
                         principalTable: "Podcasts",
                         principalColumn: "PodcastID",
@@ -377,19 +378,20 @@ namespace MediaCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PodcastReview",
+                name: "PodcastReviews",
                 columns: table => new
                 {
                     PodcastReviewID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Review = table.Column<string>(maxLength: 2048, nullable: true),
+                    User = table.Column<string>(nullable: true),
                     PodcastID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PodcastReview", x => x.PodcastReviewID);
+                    table.PrimaryKey("PK_PodcastReviews", x => x.PodcastReviewID);
                     table.ForeignKey(
-                        name: "FK_PodcastReview_Podcasts_PodcastID",
+                        name: "FK_PodcastReviews_Podcasts_PodcastID",
                         column: x => x.PodcastID,
                         principalTable: "Podcasts",
                         principalColumn: "PodcastID",
@@ -397,7 +399,7 @@ namespace MediaCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Episode",
+                name: "Episodes",
                 columns: table => new
                 {
                     EpisodeID = table.Column<int>(nullable: false)
@@ -410,9 +412,9 @@ namespace MediaCollection.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Episode", x => x.EpisodeID);
+                    table.PrimaryKey("PK_Episodes", x => x.EpisodeID);
                     table.ForeignKey(
-                        name: "FK_Episode_Series_SerieID",
+                        name: "FK_Episodes_Series_SerieID",
                         column: x => x.SerieID,
                         principalTable: "Series",
                         principalColumn: "SerieID",
@@ -420,7 +422,7 @@ namespace MediaCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SerieRating",
+                name: "SerieRatings",
                 columns: table => new
                 {
                     SerieRatingID = table.Column<int>(nullable: false)
@@ -431,9 +433,9 @@ namespace MediaCollection.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SerieRating", x => x.SerieRatingID);
+                    table.PrimaryKey("PK_SerieRatings", x => x.SerieRatingID);
                     table.ForeignKey(
-                        name: "FK_SerieRating_Series_SerieID",
+                        name: "FK_SerieRatings_Series_SerieID",
                         column: x => x.SerieID,
                         principalTable: "Series",
                         principalColumn: "SerieID",
@@ -441,7 +443,7 @@ namespace MediaCollection.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SerieReview",
+                name: "SerieReviews",
                 columns: table => new
                 {
                     SerieReviewID = table.Column<int>(nullable: false)
@@ -452,9 +454,9 @@ namespace MediaCollection.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SerieReview", x => x.SerieReviewID);
+                    table.PrimaryKey("PK_SerieReviews", x => x.SerieReviewID);
                     table.ForeignKey(
-                        name: "FK_SerieReview_Series_SerieID",
+                        name: "FK_SerieReviews_Series_SerieID",
                         column: x => x.SerieID,
                         principalTable: "Series",
                         principalColumn: "SerieID",
@@ -467,63 +469,81 @@ namespace MediaCollection.Migrations
                 values: new object[] { 1, "Pink Floyd", null, new TimeSpan(0, 0, 48, 0, 0), "Experimental Rock", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified).AddTicks(1973), "Dark Side of the Moon" });
 
             migrationBuilder.InsertData(
-                table: "Episode",
-                columns: new[] { "EpisodeID", "Duration", "EpisodeNo", "Season", "SerieID", "Synopsis" },
-                values: new object[] { 1, new TimeSpan(0, 1, 2, 0, 0), 1, 1, null, "Eddard Stark is torn between his family and an old friend when asked to serve at the side of King Robert Baratheon; Viserys plans to wed his sister to a nomadic warlord in exchange for an army." });
-
-            migrationBuilder.InsertData(
-                table: "MovieRating",
-                columns: new[] { "MovieRatingID", "MovieID", "Rating", "User" },
-                values: new object[] { 1, null, 9, "cage2005@hotmail.com" });
-
-            migrationBuilder.InsertData(
-                table: "MovieReview",
-                columns: new[] { "MovieReviewID", "MovieID", "Review", "User" },
-                values: new object[] { 1, null, "Can Hollywood, usually creating things for entertainment purposes only, create art? To create something of this nature, a director must approach it in a most meticulous manner, due to the delicacy of the process. Such a daunting task requires an extremely capable artist with an undeniable managerial capacity and an acutely developed awareness of each element of art in their films, the most prominent; music, visuals, script, and acting. These elements, each equally important, must succeed independently, yet still form a harmonious union, because this mixture determines the fate of the artist's opus. Though already well known amongst his colleagues for his notable skills at writing and directing, Frank Darabont emerges with his feature film directorial debut, The Shawshank Redemption. Proving himself already a master of the craft, Darabont managed to create one of the most recognizable independent releases in the history of Hollywood. The Shawshank Redemption defines a genre, defies the odds, compels the emotions, and brings an era of artistically influential films back to Hollywood.", "cage2005@hotmail.com" });
-
-            migrationBuilder.InsertData(
                 table: "Movies",
                 columns: new[] { "MovieID", "Cast", "Director", "Duration", "Genre", "Poster", "ReleaseDate", "Synopsis", "Title" },
                 values: new object[] { 1, "Tim Robbins, Morgan Freeman, Bob Gunton", "Frank Darabont", new TimeSpan(0, 2, 22, 0, 0), "Drama", null, new DateTime(1995, 3, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.", "The Shawshank Redemption" });
 
             migrationBuilder.InsertData(
-                table: "PodcastEpisode",
-                columns: new[] { "PodcastEpisodeID", "Date", "Duration", "EpisodeNo", "Guests", "Hosts", "PodcastID", "Title" },
-                values: new object[] { 1, new DateTime(2019, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 12, 45, 0), 1, "", "", null, "De Specht" });
-
-            migrationBuilder.InsertData(
                 table: "Podcasts",
-                columns: new[] { "PodcastID", "Poster", "Publisher", "Title" },
-                values: new object[] { 1, null, "Begijn Le Blue", "Fwiet! Fwiet!" });
-
-            migrationBuilder.InsertData(
-                table: "SerieRating",
-                columns: new[] { "SerieRatingID", "Rating", "SerieID", "User" },
-                values: new object[] { 1, 9, null, "cage2005@hotmail.com" });
-
-            migrationBuilder.InsertData(
-                table: "SerieReview",
-                columns: new[] { "SerieReviewID", "Review", "SerieID", "User" },
-                values: new object[] { 1, "It was a master piece. It was written to the perfection. It was mesmerizing. It was gripping. It was so shocking that if someone is binge watching this show he/she will need a time-off in between to get their head around things and accept some messed up, yet mind blowing development. But yet, I cant hate it enough after final season.Its like you came to know that you were in love with the wrong one all along.It was like looking at a completely different person.It was like seeing your own dreams and expectations get destroyed.It was not a let down, it was a BETRAYAL!", null, "cage2005@hotmail.com" });
+                columns: new[] { "PodcastID", "Poster", "Publisher", "Synopsis", "Title" },
+                values: new object[] { 1, null, "Begijn Le Blue", "Every week 3 new birds are discussed with professional bird-watchers.", "Fwiet! Fwiet!" });
 
             migrationBuilder.InsertData(
                 table: "Series",
                 columns: new[] { "SerieID", "Cast", "Director", "Genre", "Poster", "ReleaseDate", "Synopsis", "Title" },
-                values: new object[] { 1, "Emilia Clarke, Peter Dinklage, Kit Harrington", "D.B. Weiss, David Benioff", "Action, Adventure, Drama", null, new DateTime(2011, 4, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Game of Thrones" });
+                values: new object[] { 1, "Emilia Clarke, Peter Dinklage, Kit Harrington", "D.B. Weiss, David Benioff", "Action, Adventure, Drama", null, new DateTime(2011, 4, 17, 0, 0, 0, 0, DateTimeKind.Unspecified), "Nine noble families fight for control over the mythical lands of Westeros, while an ancient enemy returns after being dormant for thousands of years.", "Game of Thrones" });
 
             migrationBuilder.InsertData(
-                table: "Track",
+                table: "AlbumRatings",
+                columns: new[] { "AlbumRatingID", "AlbumID", "Rating", "User" },
+                values: new object[] { 1, 1, 9, "Cage2005@hotmail.com" });
+
+            migrationBuilder.InsertData(
+                table: "Episodes",
+                columns: new[] { "EpisodeID", "Duration", "EpisodeNo", "Season", "SerieID", "Synopsis" },
+                values: new object[] { 1, new TimeSpan(0, 1, 2, 0, 0), 1, 1, 1, "Eddard Stark is torn between his family and an old friend when asked to serve at the side of King Robert Baratheon; Viserys plans to wed his sister to a nomadic warlord in exchange for an army." });
+
+            migrationBuilder.InsertData(
+                table: "MovieRatings",
+                columns: new[] { "MovieRatingID", "MovieID", "Rating", "User" },
+                values: new object[,]
+                {
+                    { 1, 1, 9, "cage2005@hotmail.com" },
+                    { 2, 1, 8, "gerben.calus@vdab.be" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "MovieReviews",
+                columns: new[] { "MovieReviewID", "MovieID", "Review", "User" },
+                values: new object[,]
+                {
+                    { 1, 1, "Can Hollywood, usually creating things for entertainment purposes only, create art? To create something of this nature, a director must approach it in a most meticulous manner, due to the delicacy of the process. Such a daunting task requires an extremely capable artist with an undeniable managerial capacity and an acutely developed awareness of each element of art in their films, the most prominent; music, visuals, script, and acting. These elements, each equally important, must succeed independently, yet still form a harmonious union, because this mixture determines the fate of the artist's opus. Though already well known amongst his colleagues for his notable skills at writing and directing, Frank Darabont emerges with his feature film directorial debut, The Shawshank Redemption. Proving himself already a master of the craft, Darabont managed to create one of the most recognizable independent releases in the history of Hollywood. The Shawshank Redemption defines a genre, defies the odds, compels the emotions, and brings an era of artistically influential films back to Hollywood.", "cage2005@hotmail.com" },
+                    { 2, 1, "Why do I want to write the 234th comment on The Shawshank Redemption? I am not sure - almost everything that could be possibly said about it has been said. But like so many other people who wrote comments, I was and am profoundly moved by this simple and eloquent depiction of hope and friendship and redemption.", "gerben.calus@vdab.be" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "PodcastEpisodes",
+                columns: new[] { "PodcastEpisodeID", "Date", "Duration", "EpisodeNo", "Guests", "Hosts", "PodcastID", "Title" },
+                values: new object[] { 1, new DateTime(2019, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 0, 12, 45, 0), 1, "", "", 1, "De Specht" });
+
+            migrationBuilder.InsertData(
+                table: "SerieRatings",
+                columns: new[] { "SerieRatingID", "Rating", "SerieID", "User" },
+                values: new object[] { 1, 9, 1, "cage2005@hotmail.com" });
+
+            migrationBuilder.InsertData(
+                table: "SerieReviews",
+                columns: new[] { "SerieReviewID", "Review", "SerieID", "User" },
+                values: new object[] { 1, "It was a master piece. It was written to the perfection. It was mesmerizing. It was gripping. It was so shocking that if someone is binge watching this show he/she will need a time-off in between to get their head around things and accept some messed up, yet mind blowing development. But yet, I cant hate it enough after final season.Its like you came to know that you were in love with the wrong one all along.It was like looking at a completely different person.It was like seeing your own dreams and expectations get destroyed.It was not a let down, it was a BETRAYAL!", 1, "cage2005@hotmail.com" });
+
+            migrationBuilder.InsertData(
+                table: "Tracks",
                 columns: new[] { "TrackID", "AlbumID", "Artist", "Duration", "TrackName", "TrackNo" },
-                values: new object[] { 1, null, "Pink Floyd", new TimeSpan(0, 0, 1, 30, 0), "Speak to Me", 1 });
+                values: new object[,]
+                {
+                    { 1, 1, "Pink Floyd", new TimeSpan(0, 0, 1, 30, 0), "Speak to Me", 1 },
+                    { 2, 1, "Pink Floyd", new TimeSpan(0, 0, 2, 43, 0), "Breathe", 2 },
+                    { 3, 1, "Pink Floyd", new TimeSpan(0, 0, 3, 36, 0), "On the Run", 2 }
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AlbumRating_AlbumID",
-                table: "AlbumRating",
+                name: "IX_AlbumRatings_AlbumID",
+                table: "AlbumRatings",
                 column: "AlbumID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AlbumReview_AlbumID",
-                table: "AlbumReview",
+                name: "IX_AlbumReviews_AlbumID",
+                table: "AlbumReviews",
                 column: "AlbumID");
 
             migrationBuilder.CreateIndex(
@@ -566,58 +586,58 @@ namespace MediaCollection.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Episode_SerieID",
-                table: "Episode",
+                name: "IX_Episodes_SerieID",
+                table: "Episodes",
                 column: "SerieID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieRating_MovieID",
-                table: "MovieRating",
+                name: "IX_MovieRatings_MovieID",
+                table: "MovieRatings",
                 column: "MovieID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MovieReview_MovieID",
-                table: "MovieReview",
+                name: "IX_MovieReviews_MovieID",
+                table: "MovieReviews",
                 column: "MovieID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PodcastEpisode_PodcastID",
-                table: "PodcastEpisode",
+                name: "IX_PodcastEpisodes_PodcastID",
+                table: "PodcastEpisodes",
                 column: "PodcastID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PodcastRating_PodcastID",
-                table: "PodcastRating",
+                name: "IX_PodcastRatings_PodcastID",
+                table: "PodcastRatings",
                 column: "PodcastID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PodcastReview_PodcastID",
-                table: "PodcastReview",
+                name: "IX_PodcastReviews_PodcastID",
+                table: "PodcastReviews",
                 column: "PodcastID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SerieRating_SerieID",
-                table: "SerieRating",
+                name: "IX_SerieRatings_SerieID",
+                table: "SerieRatings",
                 column: "SerieID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SerieReview_SerieID",
-                table: "SerieReview",
+                name: "IX_SerieReviews_SerieID",
+                table: "SerieReviews",
                 column: "SerieID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Track_AlbumID",
-                table: "Track",
+                name: "IX_Tracks_AlbumID",
+                table: "Tracks",
                 column: "AlbumID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AlbumRating");
+                name: "AlbumRatings");
 
             migrationBuilder.DropTable(
-                name: "AlbumReview");
+                name: "AlbumReviews");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -635,31 +655,31 @@ namespace MediaCollection.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Episode");
+                name: "Episodes");
 
             migrationBuilder.DropTable(
-                name: "MovieRating");
+                name: "MovieRatings");
 
             migrationBuilder.DropTable(
-                name: "MovieReview");
+                name: "MovieReviews");
 
             migrationBuilder.DropTable(
-                name: "PodcastEpisode");
+                name: "PodcastEpisodes");
 
             migrationBuilder.DropTable(
-                name: "PodcastRating");
+                name: "PodcastRatings");
 
             migrationBuilder.DropTable(
-                name: "PodcastReview");
+                name: "PodcastReviews");
 
             migrationBuilder.DropTable(
-                name: "SerieRating");
+                name: "SerieRatings");
 
             migrationBuilder.DropTable(
-                name: "SerieReview");
+                name: "SerieReviews");
 
             migrationBuilder.DropTable(
-                name: "Track");
+                name: "Tracks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

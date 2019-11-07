@@ -83,7 +83,16 @@ namespace MediaCollection.Migrations
 
                     b.HasIndex("AlbumID");
 
-                    b.ToTable("AlbumRating");
+                    b.ToTable("AlbumRatings");
+
+                    b.HasData(
+                        new
+                        {
+                            AlbumRatingID = 1,
+                            AlbumID = 1,
+                            Rating = 9,
+                            User = "Cage2005@hotmail.com"
+                        });
                 });
 
             modelBuilder.Entity("MediaCollection.Database.AlbumReview", b =>
@@ -107,7 +116,7 @@ namespace MediaCollection.Migrations
 
                     b.HasIndex("AlbumID");
 
-                    b.ToTable("AlbumReview");
+                    b.ToTable("AlbumReviews");
                 });
 
             modelBuilder.Entity("MediaCollection.Database.Episode", b =>
@@ -137,7 +146,7 @@ namespace MediaCollection.Migrations
 
                     b.HasIndex("SerieID");
 
-                    b.ToTable("Episode");
+                    b.ToTable("Episodes");
 
                     b.HasData(
                         new
@@ -146,6 +155,7 @@ namespace MediaCollection.Migrations
                             Duration = new TimeSpan(0, 1, 2, 0, 0),
                             EpisodeNo = 1,
                             Season = 1,
+                            SerieID = 1,
                             Synopsis = "Eddard Stark is torn between his family and an old friend when asked to serve at the side of King Robert Baratheon; Viserys plans to wed his sister to a nomadic warlord in exchange for an army."
                         });
                 });
@@ -224,14 +234,22 @@ namespace MediaCollection.Migrations
 
                     b.HasIndex("MovieID");
 
-                    b.ToTable("MovieRating");
+                    b.ToTable("MovieRatings");
 
                     b.HasData(
                         new
                         {
                             MovieRatingID = 1,
+                            MovieID = 1,
                             Rating = 9,
                             User = "cage2005@hotmail.com"
+                        },
+                        new
+                        {
+                            MovieRatingID = 2,
+                            MovieID = 1,
+                            Rating = 8,
+                            User = "gerben.calus@vdab.be"
                         });
                 });
 
@@ -256,14 +274,22 @@ namespace MediaCollection.Migrations
 
                     b.HasIndex("MovieID");
 
-                    b.ToTable("MovieReview");
+                    b.ToTable("MovieReviews");
 
                     b.HasData(
                         new
                         {
                             MovieReviewID = 1,
+                            MovieID = 1,
                             Review = "Can Hollywood, usually creating things for entertainment purposes only, create art? To create something of this nature, a director must approach it in a most meticulous manner, due to the delicacy of the process. Such a daunting task requires an extremely capable artist with an undeniable managerial capacity and an acutely developed awareness of each element of art in their films, the most prominent; music, visuals, script, and acting. These elements, each equally important, must succeed independently, yet still form a harmonious union, because this mixture determines the fate of the artist's opus. Though already well known amongst his colleagues for his notable skills at writing and directing, Frank Darabont emerges with his feature film directorial debut, The Shawshank Redemption. Proving himself already a master of the craft, Darabont managed to create one of the most recognizable independent releases in the history of Hollywood. The Shawshank Redemption defines a genre, defies the odds, compels the emotions, and brings an era of artistically influential films back to Hollywood.",
                             User = "cage2005@hotmail.com"
+                        },
+                        new
+                        {
+                            MovieReviewID = 2,
+                            MovieID = 1,
+                            Review = "Why do I want to write the 234th comment on The Shawshank Redemption? I am not sure - almost everything that could be possibly said about it has been said. But like so many other people who wrote comments, I was and am profoundly moved by this simple and eloquent depiction of hope and friendship and redemption.",
+                            User = "gerben.calus@vdab.be"
                         });
                 });
 
@@ -281,6 +307,10 @@ namespace MediaCollection.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<string>("Synopsis")
+                        .HasColumnType("nvarchar(512)")
+                        .HasMaxLength(512);
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
@@ -294,6 +324,7 @@ namespace MediaCollection.Migrations
                         {
                             PodcastID = 1,
                             Publisher = "Begijn Le Blue",
+                            Synopsis = "Every week 3 new birds are discussed with professional bird-watchers.",
                             Title = "Fwiet! Fwiet!"
                         });
                 });
@@ -333,7 +364,7 @@ namespace MediaCollection.Migrations
 
                     b.HasIndex("PodcastID");
 
-                    b.ToTable("PodcastEpisode");
+                    b.ToTable("PodcastEpisodes");
 
                     b.HasData(
                         new
@@ -344,6 +375,7 @@ namespace MediaCollection.Migrations
                             EpisodeNo = 1,
                             Guests = "",
                             Hosts = "",
+                            PodcastID = 1,
                             Title = "De Specht"
                         });
                 });
@@ -365,7 +397,7 @@ namespace MediaCollection.Migrations
 
                     b.HasIndex("PodcastID");
 
-                    b.ToTable("PodcastRating");
+                    b.ToTable("PodcastRatings");
                 });
 
             modelBuilder.Entity("MediaCollection.Database.PodcastReview", b =>
@@ -382,11 +414,14 @@ namespace MediaCollection.Migrations
                         .HasColumnType("nvarchar(2048)")
                         .HasMaxLength(2048);
 
+                    b.Property<string>("User")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("PodcastReviewID");
 
                     b.HasIndex("PodcastID");
 
-                    b.ToTable("PodcastReview");
+                    b.ToTable("PodcastReviews");
                 });
 
             modelBuilder.Entity("MediaCollection.Database.Serie", b =>
@@ -415,8 +450,8 @@ namespace MediaCollection.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Synopsis")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(512)")
+                        .HasMaxLength(512);
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(100)")
@@ -434,6 +469,7 @@ namespace MediaCollection.Migrations
                             Director = "D.B. Weiss, David Benioff",
                             Genre = "Action, Adventure, Drama",
                             ReleaseDate = new DateTime(2011, 4, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Synopsis = "Nine noble families fight for control over the mythical lands of Westeros, while an ancient enemy returns after being dormant for thousands of years.",
                             Title = "Game of Thrones"
                         });
                 });
@@ -458,13 +494,14 @@ namespace MediaCollection.Migrations
 
                     b.HasIndex("SerieID");
 
-                    b.ToTable("SerieRating");
+                    b.ToTable("SerieRatings");
 
                     b.HasData(
                         new
                         {
                             SerieRatingID = 1,
                             Rating = 9,
+                            SerieID = 1,
                             User = "cage2005@hotmail.com"
                         });
                 });
@@ -490,13 +527,14 @@ namespace MediaCollection.Migrations
 
                     b.HasIndex("SerieID");
 
-                    b.ToTable("SerieReview");
+                    b.ToTable("SerieReviews");
 
                     b.HasData(
                         new
                         {
                             SerieReviewID = 1,
                             Review = "It was a master piece. It was written to the perfection. It was mesmerizing. It was gripping. It was so shocking that if someone is binge watching this show he/she will need a time-off in between to get their head around things and accept some messed up, yet mind blowing development. But yet, I cant hate it enough after final season.Its like you came to know that you were in love with the wrong one all along.It was like looking at a completely different person.It was like seeing your own dreams and expectations get destroyed.It was not a let down, it was a BETRAYAL!",
+                            SerieID = 1,
                             User = "cage2005@hotmail.com"
                         });
                 });
@@ -529,16 +567,35 @@ namespace MediaCollection.Migrations
 
                     b.HasIndex("AlbumID");
 
-                    b.ToTable("Track");
+                    b.ToTable("Tracks");
 
                     b.HasData(
                         new
                         {
                             TrackID = 1,
+                            AlbumID = 1,
                             Artist = "Pink Floyd",
                             Duration = new TimeSpan(0, 0, 1, 30, 0),
                             TrackName = "Speak to Me",
                             TrackNo = 1
+                        },
+                        new
+                        {
+                            TrackID = 2,
+                            AlbumID = 1,
+                            Artist = "Pink Floyd",
+                            Duration = new TimeSpan(0, 0, 2, 43, 0),
+                            TrackName = "Breathe",
+                            TrackNo = 2
+                        },
+                        new
+                        {
+                            TrackID = 3,
+                            AlbumID = 1,
+                            Artist = "Pink Floyd",
+                            Duration = new TimeSpan(0, 0, 3, 36, 0),
+                            TrackName = "On the Run",
+                            TrackNo = 2
                         });
                 });
 
@@ -794,7 +851,7 @@ namespace MediaCollection.Migrations
             modelBuilder.Entity("MediaCollection.Database.PodcastReview", b =>
                 {
                     b.HasOne("MediaCollection.Database.Podcast", "Podcast")
-                        .WithMany("podcastReviews")
+                        .WithMany("Reviews")
                         .HasForeignKey("PodcastID");
                 });
 

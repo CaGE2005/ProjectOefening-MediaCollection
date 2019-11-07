@@ -15,63 +15,102 @@
 }
 
 @{
-    int Rating = 10;
+    int rating = 0;
+    int count = 0;
+    foreach(var userrating in Model.Ratings)
+    {
+        count++;
+        rating += userrating.Rating;
+    }
+    rating = rating / count;
 }
 
 <div class="container" lang="en">
-    <div class="row bg-dark text-light">
-        <div class="col-sm-1">
-            <h1>
-                <a href="~/images/add_to_playlist.png">
-                    <img src="~/images/add_to_playlist.png" class="margin:auto display:block img-fluid" alt="Add to playlist" onmouseover="PopStateEvent" />
-                </a>
-            </h1>
-        </div>
-        <div class="col-sm-5">
-            <h1>@Model.Title (@Model.ReleaseDate.Year)</h1>
-            <p>@Model.Duration.Hours h @Model.Duration.Minutes minutes &nbsp; | &nbsp; @Model.Genre   &nbsp; | &nbsp; @Model.ReleaseDate.ToString("dd MMMM yyyy")</p>
-        </div>
-        <div class="col-sm-1">
-            <h1>@Rating</h1>
-            <h1 class="small">/10</h1>
-        </div>
-        <div class="col-sm-1">
-            <h1 class="small text-right">RATE THIS</h1>
-        </div>
-        <div class="col-sm-4 bg-info">
-
-        </div>
-    </div>  
     <div class="row">
-        <div class="col-sm-3">
-            <p><img src="@imgSrc" class="display:block img-fluid" /></p>
-        </div>
-        <div class="col-sm-5">
-            <p>@Model.Synopsis</p>
-        </div>
-        <div class="col-sm-4 bg-info">
+        <div class="col-sm-9">
+
+            <div class="row">
+
+                <div class="col-sm-1 bg-dark text-light">
+                    <h1>
+                        <a href="~/images/add_to_playlist.png">
+                            <img src="~/images/add_to_playlist.png" class="margin:auto display:block img-fluid" alt="Add to playlist" onmouseover="PopStateEvent" />
+                        </a>
+                    </h1>
+                </div>
+
+                <div class="col-sm-10">
+
+                    <div class="row">
+                        <div class="col-sm-10 bg-dark text-light">
+                            <h1>@Model.Title (@Model.ReleaseDate.Year)</h1>
+                            <p>@Model.Duration.Hours h @Model.Duration.Minutes minutes &nbsp; | &nbsp; @Model.Genre   &nbsp; | &nbsp; @Model.ReleaseDate.ToString("dd MMMM yyyy")</p>
+                        </div>
+                        <div class="col-sm-2 bg-dark text-light">
+                            <img src="~/images/heart full.png" class="img-fluid" style="max-height:30%; max-width:30%"/>
+                            <h2>@rating /10</h2>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-5 bg-dark text-light">
+                            <p><img src="@imgSrc" class="display:block img-fluid" /></p>
+                        </div>
+                        <div class="col-sm-7 bg-light text-dark">
+                            <p>@Model.Synopsis</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 bg-dark text-light">
+                            <br />
+                            <p>Director(s): @Model.Director</p>
+                            <p>Cast: @Model.Cast</p>
+                        </div>                                                  
+                    </div>  
+                    
+                </div>
+
+                <div class="col-sm-1 bg-dark text-light">
+                    <img src="~/images/heart empty.png" class="img-fluid" />
+                    <h1 class="small text-right">RATE THIS</h1>
+                </div>
+
+            </div>
 
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-8 bg-dark text-light">
-            <p>Director(s): @Model.Director</p>
-        </div>
-        <div class="col-sm-4 bg-info">
 
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-8 bg-dark text-light">
-            <p>Cast: @Model.Cast</p>
-        </div>
-        <div class="col-sm-4 bg-info">
+        <div class="col-sm-3 bg-info"></div>
 
-        </div>
     </div>
+    
 </div>
 
 <div>
     <a asp-action="Edit" asp-route-id="@Model.MovieID">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 bg-dark text-light">
+            <h3>Reviews</h3>
+        </div>
+    </div>
+</div>
+
+@foreach (var review in Model.Reviews)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 bg-dark text-light border border-dark">
+                <h6>Review by: @review.User </h6>
+            </div>
+            <div class="col-sm-12 bg-light text-dark border border-dark">
+                <p>@review.Review</p>
+            </div>
+        </div>
+    </div>
+}
+

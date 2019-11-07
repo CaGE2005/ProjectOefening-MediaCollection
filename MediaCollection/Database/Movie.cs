@@ -22,11 +22,11 @@ namespace MediaCollection.Database
                 
         [Display(Name = "Duration")]
         [DisplayFormat(DataFormatString = @"{0:hh\:mm}", ApplyFormatInEditMode = true)]
-        //[Range(typeof(TimeSpan), "00:00", "23:59")]
         public TimeSpan Duration { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = @"{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Release Date")]
         public DateTime ReleaseDate { get; set; }
 
         [StringLength(512)]

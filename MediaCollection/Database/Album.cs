@@ -28,8 +28,7 @@ namespace MediaCollection.Database
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = @"{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ReleaseDate { get; set; }
-
-        [RegularExpression(@"[0-9]")]
+                
         [Display(Name = "Duration")]
         [DisplayFormat(DataFormatString = @"{0:hh\:mm}", ApplyFormatInEditMode = true)]
         public TimeSpan Duration { get; set; }

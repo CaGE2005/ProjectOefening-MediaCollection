@@ -4,6 +4,17 @@
     ViewData["Title"] = "Edit";
 }
 
+@{
+    string imgSrc = "";
+
+    if (Model.Cover != null)
+    {
+        var base64 = Convert.ToBase64String(Model.Cover);
+        imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+    }
+}
+
+
 <h1>Edit</h1>
 
 <h4>Album</h4>
@@ -40,7 +51,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="Cover" class="control-label"></label>
-                <input asp-for="Cover" class="form-control" />
+                <br>
+                <img src="@imgSrc" width="80" height="80" />
+                <input asp-for="Cover" type="file" name="newCover" />
                 <span asp-validation-for="Cover" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Movie Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <input type="submit" value="Add New Movie" class="btn btn-info" onclick="location.href='@Url.Action("Create","Movies")'" />
 </p>
 <table class="table">
     <thead>
@@ -37,10 +37,10 @@
                 @Html.DisplayFor(modelItem => item.Genre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Duration)
+                @Html.DisplayFor(modelItem => item.Duration.TotalMinutes) minutes
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
+                @Html.DisplayFor(modelItem => item.ReleaseDate.Year)
             </td>            
             <td>
                 <a asp-action="Edit" asp-route-id="@item.MovieID">Edit</a> |
