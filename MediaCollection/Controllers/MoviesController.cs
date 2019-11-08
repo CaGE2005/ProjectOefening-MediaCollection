@@ -112,7 +112,6 @@ namespace MediaCollection.Controllers
             }
 
 
-
             if (ModelState.IsValid)
             {
                 try
@@ -178,5 +177,33 @@ namespace MediaCollection.Controllers
         {
             return _context.Movies.Any(e => e.MovieID == id);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddMovieReview(int id, string user, string review)
+        {
+            MovieReview movieReview = new MovieReview();
+            movieReview.MovieReviewID = id;
+            movieReview.User = user;
+            movieReview.Review = review;
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Detail");
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> AddRating(int id, int newRating)
+        //{
+        //    MovieRating rating = new MovieRating();
+        //    rating.Rating = newRating;
+        //    rating.MovieRatingID = id;
+        //    rating.User = User.Identity.Name;
+
+        //    _context.MovieRatings.Add(rating);
+        //    await _context.SaveChangesAsync();
+
+        //    return RedirectToAction(nameof(Details));
+        //}
     }
 }

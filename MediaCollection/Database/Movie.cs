@@ -54,7 +54,7 @@ namespace MediaCollection.Database
     {
         public int MovieRatingID { get; set; }
 
-        [RegularExpression(@"0-9")]
+        [RegularExpression(@"[0-9]")]
         [Range(1,10)]
         [Display(Name = "Rating")]
         public int Rating { get; set; }

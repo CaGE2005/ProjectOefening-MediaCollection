@@ -12,17 +12,13 @@
         var base64 = Convert.ToBase64String(Model.Poster);
         imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
     }
-}
 
-@{
     int rating = 0;
-    int count = 0;
-    foreach(var userrating in Model.Ratings)
+
+    if (Model.Ratings.Count >= 0)
     {
-        count++;
-        rating += userrating.Rating;
+         rating = Convert.ToInt16(Model.Ratings.Average(x => x.Rating));
     }
-    rating = rating / count;
 }
 
 <div class="container" lang="en">
@@ -33,9 +29,12 @@
 
                 <div class="col-sm-1 bg-dark text-light">
                     <h1>
-                        <a href="~/images/add_to_playlist.png">
-                            <img src="~/images/add_to_playlist.png" class="margin:auto display:block img-fluid" alt="Add to playlist" onmouseover="PopStateEvent" />
-                        </a>
+                        @if (User.Identity.Name != null)
+                        {
+                            <a href="~/images/add_to_playlist.png">
+                                <img src="~/images/add_to_playlist.png" class="margin:auto display:block img-fluid" alt="Add to playlist" onmouseover="PopStateEvent" />
+                            </a>
+                        }
                     </h1>
                 </div>
 
@@ -72,15 +71,23 @@
                 </div>
 
                 <div class="col-sm-1 bg-dark text-light">
-                    <img src="~/images/heart empty.png" class="img-fluid" />
-                    <h1 class="small text-right">RATE THIS</h1>
+                    @if (User.Identity.Name != null)
+                    {
+                        @*<a href="~/Movie/AddMovieRating">*@
+                        <a asp-action="AddMovieRating" asp-route-id="@Model.MovieID">
+                            <img src="~/images/heart empty.png" class="img-fluid"/>
+                            <h1 class="small text-right">RATE THIS</h1>
+                        </a>
+                    }
                 </div>
 
             </div>
 
         </div>
 
-        <div class="col-sm-3 bg-info"></div>
+        <div class="col-sm-3 bg-info">
+           <h2> Advertisements go here!</h2>
+        </div>
 
     </div>
     
@@ -97,8 +104,13 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 bg-dark text-light">
+        <div class="col-sm-10 bg-dark text-light">
             <h3>Reviews</h3>
+        </div>
+        <div class="col-sm-2 bg-dark">
+            <div class="form-group">
+                <input type="submit" value="Add Review" class="btn btn-info" />
+            </div>
         </div>
     </div>
 </div>
