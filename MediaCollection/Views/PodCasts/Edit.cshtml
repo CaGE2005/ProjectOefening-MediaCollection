@@ -4,6 +4,16 @@
     ViewData["Title"] = "Edit";
 }
 
+@{
+    string imgSrc = "";
+
+    if (Model.Poster != null)
+    {
+        var base64 = Convert.ToBase64String(Model.Poster);
+        imgSrc = String.Format("data:image/jpg;base64,{0}", base64);
+    }
+}
+
 <h1>Edit</h1>
 
 <h4>PodCast</h4>
@@ -22,10 +32,18 @@
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
-            </div>          
+            </div>
+            <div class="form-group">
+                <label asp-for="Synopsis" class="control-label"></label>
+                <br>
+                <textarea rows="5" cols="50" asp-for="Synopsis"></textarea>
+                <span asp-validation-for="Synopsis" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Poster" class="control-label"></label>
-                <input asp-for="Poster" class="form-control" />
+                <br>
+                <img src="@imgSrc" width="80" height="80" />
+                <input asp-for="Poster" type="file" name="newPoster" />
                 <span asp-validation-for="Poster" class="text-danger"></span>
             </div>
             <div class="form-group">

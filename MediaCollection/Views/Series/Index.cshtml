@@ -6,9 +6,12 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (User.Identity.Name != null)
+{
+    <p>
+        <a class="btn btn-info" role="button" asp-action="Create">Add New Serie</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -17,34 +20,35 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Genre)
-            </th>            
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.ReleaseDate)
-            </th>                      
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>           
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
-            </td>           
-            <td>
-                <a asp-action="Details" asp-route-id="@item.SerieID">Details |</a>
-                @if (User.Identity.Name != null)
-                {
-                    <a asp-action="Edit" asp-route-id="@item.SerieID">Edit |</a>
-                    <a asp-action="Delete" asp-route-id="@item.SerieID">Delete </a>
-                }
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.SerieID">Details </a>
+                    @if (User.Identity.Name != null)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.SerieID"> | Edit </a>
+                        <a asp-action="Delete" asp-route-id="@item.SerieID"> | Delete </a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

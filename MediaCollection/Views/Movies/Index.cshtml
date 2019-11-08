@@ -6,12 +6,12 @@
 
 <h1>Movie Index</h1>
 
+@if (User.Identity.Name != null)
+{
 <p>
-    @if (User.Identity.Name != null)
-    {
-        <input type="submit" value="Add New Movie" class="btn btn-info" onclick="location.href='@Url.Action("Create", "Movies")'" />
-    }
+    <a class="btn btn-info" role="button" asp-action="Create">Add New Movie</a>
 </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -31,29 +31,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration.TotalMinutes) minutes
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate.Year)
-            </td>            
-            <td>
-                <a asp-action="Details" asp-route-id="@item.MovieID">Details |</a>
-                @if (User.Identity.Name != null)
-                {
-                    <a asp-action="Edit" asp-route-id="@item.MovieID">Edit |</a>                    
-                    <a asp-action="Delete" asp-route-id="@item.MovieID">Delete </a>
-                 }
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Genre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration.TotalMinutes) minutes
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReleaseDate.Year)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.MovieID">Details </a>
+                    @if (User.Identity.Name != null)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.MovieID"> | Edit </a>
+                        <a asp-action="Delete" asp-route-id="@item.MovieID"> | Delete </a>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
