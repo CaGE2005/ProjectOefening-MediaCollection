@@ -43,9 +43,12 @@
                 @Html.DisplayFor(modelItem => item.Duration)
             </td>           
             <td>
-                <a asp-action="Edit" asp-route-id="@item.AlbumID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AlbumID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AlbumID">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.AlbumID">Details |</a>
+                @if (User.Identity.Name != null)
+                {
+                    <a asp-action="Edit" asp-route-id="@item.AlbumID">Edit |</a>
+                    <a asp-action="Delete" asp-route-id="@item.AlbumID">Delete </a>
+                }
             </td>
         </tr>
         }

@@ -24,7 +24,7 @@
                     <ul class="navbar-nav flex-grow-1">
 
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Movies" asp-action="Index">&nbsp;&nbsp; Movies &nbsp;&nbsp; |</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Movies" asp-action="Index"> | &nbsp;&nbsp; Movies &nbsp;&nbsp; |</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Series" asp-action="Index">&nbsp; Series &nbsp;&nbsp; |</a>
@@ -34,6 +34,12 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Podcasts" asp-action="Index">&nbsp; PodCasts &nbsp;&nbsp; |</a>
+                        </li>
+                        <li class="nav-item">
+                            @if (User.Identity.Name != null)
+                            {
+                            <a class="nav-link text-light" asp-area="" asp-controller="PlayLists" asp-action="Index">&nbsp; PlayLists &nbsp;&nbsp; |</a>
+                            }
                         </li>
                     </ul>
                 </div>

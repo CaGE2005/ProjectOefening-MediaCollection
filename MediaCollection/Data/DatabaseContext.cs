@@ -35,6 +35,9 @@ namespace MediaCollection.Data
         public DbSet<PodcastRating> PodcastRatings { get; set; }
         public DbSet<PodcastReview> PodcastReviews { get; set; }
 
+        //public DbSet<PlayList> PlayLists { get; set; }
+        //public DbSet<PlayListItem> PlayListItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
